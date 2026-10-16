@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://gmbpharma.github.io/sitemap.xml
+Sitemap: https://gmb-pharma.github.io/gmb/sitemap.xml
