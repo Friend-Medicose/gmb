@@ -10,18 +10,17 @@ header{background:#fff;display:flex;align-items:center;justify-content:space-bet
 .logo-wrap img{height:65px;width:65px;object-fit:contain}
 .logo-text h1{margin:0;color:#0b3d91;font-size:22px}
 .logo-text p{margin:2px 0;color:#444;font-size:14px}
-nav{font-size:15px}
 
-/* BACKGROUND - PORI IMAGE + WATERMARK LIGHT */
-.hero{position:relative;background:#fff;text-align:center;overflow:hidden}
-.hero img{width:100%;height:auto;display:block;object-fit:contain;opacity:0.25;filter:brightness(1.1)}
-.hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-.hero-overlay img{width:100%;height:auto;max-height:100%;object-fit:contain;opacity:1}
+/* BACKGROUND - PORI IMAGE + WATERMARK LIGHT - Blue Patti Hata Di */
+.hero{position:relative;background:#fff;text-align:center}
+.hero img{width:100%;height:auto;display:block;object-fit:contain;opacity:0.28}
 
-/* PATTI SLIDING - Ab background ke foran neeche, Our Products se pehle */
-.patti-wrap{overflow:hidden;background:#fff;padding:0;white-space:nowrap;border-top:1px solid #eee}
-.patti-track{display:inline-block;animation:slidePatti 14s linear infinite}
-.patti-track img{height:130px;width:auto;display:inline-block}
+/* PATTI + SLIDE - Slide Ab Patti Ke UPAR Chalegi */
+.patti-section{position:relative;width:100%;overflow:hidden;margin-top:-5px}
+.patti-bg{width:100%;display:block}
+.patti-slide{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;display:flex;align-items:center}
+.patti-track{display:flex;animation:slidePatti 14s linear infinite;gap:0}
+.patti-track img{height:130px;width:auto}
 @keyframes slidePatti{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 h2{text-align:center;color:#0b3d91;font-size:28px;margin:20px 0 10px}
@@ -46,20 +45,19 @@ footer{background:#0b3d91;color:#fff;padding:15px;text-align:center}
 <div>Home | Products | About | Contact</div>
 </header>
 
-<!-- BACKGROUND IMAGE PORI + WATERMARK LIGHT - Faces ab pore nazar ayenge -->
+<!-- BACKGROUND ONLY - Watermark Light, Pori Image, Faces Clear -->
 <div class="hero">
 <img src="images/background.jpg">
-<div class="hero-overlay">
-<img src="images/main%20display.jpg" style="object-position:top;clip-path:inset(0 0 38% 0);">
-<!-- clip-path se neechay wali Blue Patti (GMB PHARMA...) aur patti cut kar di hai -->
-</div>
 </div>
 
-<!-- PATTI SLIDING - UPAR KAR DI HAI -->
-<div class="patti-wrap">
+<!-- PATTI + SLIDE UPAR -->
+<div class="patti-section">
+<img class="patti-bg" src="images/display%20ki%20patti.jpg">
+<div class="patti-slide">
 <div class="patti-track">
 <img src="images/display%20ki%20patti.jpg">
 <img src="images/display%20ki%20patti.jpg">
+</div>
 </div>
 </div>
 
