@@ -2,29 +2,43 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GMB PHARMA KARACHI PAKISTAN</title>
 <style>
-body{font-family:Arial;margin:0;background:#fff}
-header{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 25px}
+body{font-family:Arial;margin:0;background:#fff;scroll-behavior:smooth}
+header{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 25px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px #ddd}
 .logo-wrap{display:flex;align-items:center;gap:15px}
 .logo-wrap img{height:65px;width:65px;object-fit:contain}
 .logo-text h1{margin:0;color:#0b3d91;font-size:22px}
 .logo-text p{margin:2px 0;color:#444;font-size:14px}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a{background:#0b3d91;color:#fff;text-decoration:none;padding:8px 14px;border-radius:20px;font-size:14px;font-weight:bold}
+nav a:hover{background:#ff6600}
+/* HERO */
 .hero{position:relative;background:#fff;text-align:center;overflow:hidden}
-.hero img{width:100%;height:auto;display:block;object-fit:contain;opacity:0.28}
-.hero-slide{position:absolute;left:0;bottom:10px;width:100%;overflow:hidden;display:flex;align-items:center;z-index:5}
-.hero-track{display:flex;animation:slidePatti 12s linear infinite}
-.hero-track img{height:130px;width:auto}
+.hero img{width:100%;height:auto;display:block;object-fit:contain;opacity:.35}
+/* FIX 1 - SLIDE WAZEH - Bright, Bara, Clear */
+.hero-slide{position:absolute;left:0;bottom:5px;width:100%;overflow:hidden;display:flex;align-items:center;z-index:5;background:rgba(255,255,255,.65);padding:4px 0}
+.hero-track{display:flex;animation:slidePatti 10s linear infinite}
+.hero-track img{height:155px!important;width:auto;opacity:1!important;filter:brightness(1.15) contrast(1.1);box-shadow:0 2px 10px rgba(0,0,0,.3)}
 @keyframes slidePatti{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.patti-section,.patti-bg{display:none!important}
 h2{text-align:center;color:#0b3d91;font-size:28px;margin:20px 0 10px}
-.slider{display:flex;overflow:hidden;gap:15px;padding:20px;scroll-behavior:smooth}
+/* FIX 2 - PRODUCTS TEZ + CONTINUE - Bina ruke */
+.slider-wrap{overflow:hidden;width:100%;padding:20px 0}
+.slider-track{display:flex;gap:15px;animation:prodSlide 14s linear infinite;width:max-content}
+@keyframes prodSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .product{min-width:180px;background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 2px 8px #ddd;flex-shrink:0}
 .product img{width:100%;height:160px;object-fit:contain}
 .product h3{color:#0b3d91;font-size:15px}
+/* LIST + ABOUT + CONTACT */
+.section{padding:25px;max-width:900px;margin:auto}
+.list-box{background:#f4f8ff;border:1px solid #cfe0ff;border-radius:12px;padding:18px}
+.list-box ol{font-size:16px;line-height:1.9;color:#222}
+.list-box b{color:#0b3d91}
+.about-box{background:#fff7e6;border-left:6px solid #ff6600;padding:20px;border-radius:10px;line-height:1.8;font-size:16px;color:#333}
+.contact-box{background:#0b3d91;color:#fff;border-radius:14px;padding:22px;line-height:1.9;font-size:16px}
+.contact-box h3{margin-top:0;color:#ffcc00}
+.contact-box a{color:#fff;text-decoration:none}
 footer img{width:100%;display:block}
 footer{background:#0b3d91;color:#fff;padding:15px;text-align:center}
 </style>
@@ -33,49 +47,102 @@ footer{background:#0b3d91;color:#fff;padding:15px;text-align:center}
 
 <header>
 <div class="logo-wrap">
-<img src="images/logo.jpg?v=3">
+<img src="images/logo.jpg?v=4">
 <div class="logo-text">
 <h1>GMB PHARMA KARACHI PAKISTAN</h1>
 <p>Where good health begins</p>
 </div>
 </div>
-<div>Home | Products | About | Contact</div>
+<nav>
+<a href="#home">Home</a>
+<a href="#products-list">Products</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
 </header>
 
-<!-- BACKGROUND - NAYI IMAGE - ?v=3 se cache khatam -->
-<div class="hero">
-<img src="images/background.jpg?v=3">
-<div class="hero-slide">
-<div class="hero-track">
-<img src="images/display%20ki%20patti.jpg?v=3">
-<img src="images/display%20ki%20patti.jpg?v=3">
-</div>
-</div>
+<!-- HOME = DISPLAY -->
+<div id="home" class="hero">
+<img src="images/background.jpg?v=4">
+<div class="hero-slide"><div class="hero-track">
+<img src="images/display%20ki%20patti.jpg?v=4">
+<img src="images/display%20ki%20patti.jpg?v=4">
+</div></div>
 </div>
 
 <h2>Our Products</h2>
+<div class="slider-wrap"><div class="slider-track">
+  <div class="product"><img src="images/GM-APTI%20SYP.jpg?v=4"><h3>GM-APTI</h3></div>
+  <div class="product"><img src="images/GM-Berry.jpg?v=4"><h3>GM-Berry</h3></div>
+  <div class="product"><img src="images/GM-CAL%20SYP.jpg?v=4"><h3>GM-CAL SYP</h3></div>
+  <div class="product"><img src="images/GM-CAL%20TAB.jpg?v=4"><h3>GM-CAL TAB</h3></div>
+  <div class="product"><img src="images/GM-CID%20SYP.jpg?v=4"><h3>GM-CID</h3></div>
+  <div class="product"><img src="images/GM-D%20DROPS.jpg?v=4"><h3>GM-D Drops</h3></div>
+  <div class="product"><img src="images/GM-LEAF%20SYP.jpg?v=4"><h3>GM-LEAF</h3></div>
+  <div class="product"><img src="images/GM-VIT%20SYP.jpg?v=4"><h3>GM-VIT SYP</h3></div>
+  <div class="product"><img src="images/GM-VIT.jpg?v=4"><h3>GM-VIT TAB</h3></div>
+  <div class="product"><img src="images/Thy-D%20plus.jpg?v=4"><h3>Thy-D Plus</h3></div>
+  <!-- Duplicate for continuous loop -->
+  <div class="product"><img src="images/GM-APTI%20SYP.jpg?v=4"><h3>GM-APTI</h3></div>
+  <div class="product"><img src="images/GM-Berry.jpg?v=4"><h3>GM-Berry</h3></div>
+  <div class="product"><img src="images/GM-CAL%20SYP.jpg?v=4"><h3>GM-CAL SYP</h3></div>
+  <div class="product"><img src="images/GM-CAL%20TAB.jpg?v=4"><h3>GM-CAL TAB</h3></div>
+  <div class="product"><img src="images/GM-CID%20SYP.jpg?v=4"><h3>GM-CID</h3></div>
+  <div class="product"><img src="images/GM-D%20DROPS.jpg?v=4"><h3>GM-D Drops</h3></div>
+  <div class="product"><img src="images/GM-LEAF%20SYP.jpg?v=4"><h3>GM-LEAF</h3></div>
+  <div class="product"><img src="images/GM-VIT%20SYP.jpg?v=4"><h3>GM-VIT SYP</h3></div>
+  <div class="product"><img src="images/GM-VIT.jpg?v=4"><h3>GM-VIT TAB</h3></div>
+  <div class="product"><img src="images/Thy-D%20plus.jpg?v=4"><h3>Thy-D Plus</h3></div>
+</div></div>
 
-<div class="slider" id="slider">
-  <div class="product"><img src="images/GM-APTI%20SYP.jpg?v=3"><h3>GM-APTI</h3></div>
-  <div class="product"><img src="images/GM-Berry.jpg?v=3"><h3>GM-Berry</h3></div>
-  <div class="product"><img src="images/GM-CAL%20SYP.jpg?v=3"><h3>GM-CAL SYP</h3></div>
-  <div class="product"><img src="images/GM-CAL%20TAB.jpg?v=3"><h3>GM-CAL TAB</h3></div>
-  <div class="product"><img src="images/GM-CID%20SYP.jpg?v=3"><h3>GM-CID</h3></div>
-  <div class="product"><img src="images/GM-D%20DROPS.jpg?v=3"><h3>GM-D Drops</h3></div>
-  <div class="product"><img src="images/GM-LEAF%20SYP.jpg?v=3"><h3>GM-LEAF</h3></div>
-  <div class="product"><img src="images/GM-VIT%20SYP.jpg?v=3"><h3>GM-VIT SYP</h3></div>
-  <div class="product"><img src="images/GM-VIT.jpg?v=3"><h3>GM-VIT TAB</h3></div>
-  <div class="product"><img src="images/Thy-D%20plus.jpg?v=3"><h3>Thy-D Plus</h3></div>
+<!-- PRODUCTS LIST - Number Wise -->
+<div id="products-list" class="section">
+<h2>Our Products - Complete List</h2>
+<div class="list-box"><ol>
+<li><b>GM-APTI Syrup</b> - Appetite stimulant & growth tonic for children. Improves hunger, energy and healthy weight gain.</li>
+<li><b>GM-Berry Syrup</b> - Vitamin & antioxidant berry tonic. Immunity, skin health and daily energy support.</li>
+<li><b>GM-CAL Syrup</b> - Calcium + Vitamin D3 syrup for growing children. Strong bones, teeth and healthy growth.</li>
+<li><b>GM-CAL Tablet</b> - Calcium + Vitamin D3 tablet for adults. Bone strength, joint support and osteoporosis care.</li>
+<li><b>GM-CID Syrup</b> - Antacid syrup for acidity, gas, heartburn and stomach discomfort. Quick relief.</li>
+<li><b>GM-D Drops</b> - Vitamin D3 drops for infants & children. Bone development and immunity.</li>
+<li><b>GM-LEAF Syrup</b> - Herbal leaf extract syrup for cough, cold and respiratory health. Natural soothing.</li>
+<li><b>GM-VIT Syrup 120ml</b> - Multivitamin + Minerals syrup for whole family. Daily energy, immunity and weakness.</li>
+<li><b>GM-VIT Tablet 20 Tablets</b> - Complete multivitamin & mineral tablet. Strength, stamina and recovery.</li>
+<li><b>Thy-D Plus - 2 Softgel Capsules</b> - Vitamin D3 200,000 IU burst of sunshine. Bone & muscle health, deficiency treatment.</li>
+</ol></div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="section">
+<h2>About Us</h2>
+<div class="about-box">
+<b>Our Ambition — Sehat Har Ghar Tak</b><br><br>
+GMB Pharma ka mission sirf dawa banana nahi, balke Pakistan ke har ghar tak behtareen, mehfooz aur asar-daar dawa pahunchana hai. Humara yakeen hai ke achi sehat har shakhs ka haq hai — chahe wo bachcha ho, jawan ho ya buzurg.<br><br>
+Hum apni tamam medicines ko international quality standards ke mutabiq, halal aur mehfooz raw material se, modern manufacturing ke zariye tayyar karte hain. Har product pehle testing, phir packing aur phir aap tak. Hamara ambition hai ke Pakistan ki apni pharma company, duniya ke mayaar ki dawa, apne logon ke liye, munasib keemat par banaye — taake koi bacha kamzori ki wajah se peeche na rahe aur koi maa baap apne bachon ki sehat ke liye pareshan na hon.<br><br>
+<b>Where good health begins — GMB Pharma</b>
+</div>
+</div>
+
+<!-- CONTACT - Invoice se -->
+<div id="contact" class="section">
+<h2>Contact Us</h2>
+<div class="contact-box">
+<h3>GMB PHARMA - Pharmaceutical Distribution</h3>
+<b>Address:</b> Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi - Pakistan<br>
+<b>Phone / WhatsApp:</b> <a href="tel:03450707464">0345-0707464</a> , <a href="tel:03003953178">0300-3953178</a><br>
+<b>Email:</b> <a href="mailto:gmb.pharma2023@gmail.com">gmb.pharma2023@gmail.com</a><br>
+<b>NTN No:</b> 8781968<br>
+<b>License No:</b> 0447<br>
+<b>Manufactured by:</b> Nutresource International, E-70 A, S.I.T.E, Super Highway Karachi<br>
+<b>Mfg. Enlistment No:</b> 00232<br>
+<b>Marketed by:</b> GMB PHARMA KARACHI PAKISTAN
+</div>
 </div>
 
 <footer>
-<img src="images/BOTTOM%20LINE.jpg?v=3">
+<img src="images/BOTTOM%20LINE.jpg?v=4">
 <div>© 2026 GMB PHARMA KARACHI PAKISTAN | Where good health begins</div>
 </footer>
 
-<script>
-const s=document.getElementById('slider');
-setInterval(()=>{ s.scrollLeft+=260; if(s.scrollLeft+s.clientWidth>=s.scrollWidth) s.scrollLeft=0; },900);
-</script>
 </body>
 </html>
