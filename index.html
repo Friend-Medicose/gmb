@@ -1,70 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GMB PHARMA KARACHI</title>
+<meta charset="UTF-8">
+<title>GMB PHARMA KARACHI PAKISTAN</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#fff;overflow-x:hidden}
-/* HEADER */
-.header{background:#0a4eb5;color:#fff;padding:10px;text-align:center;font-weight:900;font-size:20px}
-/* FIX 1 - HERO SLIDE SAB SE UPAR */
-.hero{width:100%;height:380px;position:relative;overflow:hidden;background:#eaf2ff}
-.hero-track{display:flex;width:300%;height:100%;animation:heroSlide 12s infinite}
-.hero-track img{width:33.333%;height:100%;object-fit:cover}
-@keyframes heroSlide{0%,30%{transform:translateX(0)}33%,63%{transform:translateX(-33.333%)}66%,96%{transform:translateX(-66.666%)}100%{transform:translateX(0)}}
-/* FIX 2 - PEECHY WALI PATTI KHATAM - Is class ko display none kar diya */
-.old-marquee-strip,.duplicate-strip,.behind-strip{display:none!important}
-/* PRODUCTS SECTION */
-h2{color:#0a4eb5;text-align:center;margin:18px 0;font-size:26px}
-/* FIX 3 - PRODUCT SLIDES TEZ - pehle 45s thi, ab 15s */
-.product-slider{overflow:hidden;white-space:nowrap;background:#fff;padding:10px 0;border-top:3px solid #0a4eb5;border-bottom:3px solid #0a4eb5}
-.product-track{display:inline-flex;gap:15px;animation:prodSlide 15s linear infinite}
-.product-track img{width:200px;height:140px;object-fit:cover;border:2px solid #ddd;border-radius:10px;flex-shrink:0}
-@keyframes prodSlide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.product-track:hover{animation-play-state:paused}
-.products{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:15px}
-.card{border:1px solid #ddd;border-radius:12px;padding:10px;text-align:center}
-.card img{width:100%;height:150px;object-fit:cover;border-radius:8px}
-.card b{color:#0a4eb5;display:block;margin-top:6px}
-.footer{background:#0a4eb5;color:#fff;text-align:center;padding:15px;margin-top:10px}
-@media(max-width:600px){.hero{height:220px}.products{grid-template-columns:repeat(2,1fr)}}
+body{font-family:Arial;margin:0;background:#fff}
+header{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 25px}
+.logo-wrap{display:flex;align-items:center;gap:15px}
+.logo-wrap img{height:65px;width:65px;object-fit:contain}
+.logo-text h1{margin:0;color:#0b3d91;font-size:22px}
+.logo-text p{margin:2px 0;color:#444;font-size:14px}
+
+/* BACKGROUND - PORI IMAGE + WATERMARK LIGHT */
+.hero{position:relative;background:#fff;text-align:center;overflow:hidden}
+.hero img{width:100%;height:auto;display:block;object-fit:contain;opacity:0.28}
+
+/* FIX 1 - SLIDE AB HERO KE UPAR - Bottom pe overlay */
+.hero-slide{position:absolute;left:0;bottom:10px;width:100%;overflow:hidden;display:flex;align-items:center;z-index:5}
+.hero-track{display:flex;animation:slidePatti 12s linear infinite}
+.hero-track img{height:130px;width:auto}
+@keyframes slidePatti{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* FIX 2 - PEECHY WALI PATTI KHATAM - .patti-bg delete kar diya, ye CSS bhi off hai */
+.patti-section,.patti-bg{display:none!important}
+
+h2{text-align:center;color:#0b3d91;font-size:28px;margin:20px 0 10px}
+/* FIX 3 - PRODUCTS SLIDER TEZ - Pehle 2000ms slow tha, ab continuous tez */
+.slider{display:flex;overflow:hidden;gap:15px;padding:20px;scroll-behavior:smooth}
+.product{min-width:180px;background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 2px 8px #ddd;flex-shrink:0}
+.product img{width:100%;height:160px;object-fit:contain}
+.product h3{color:#0b3d91;font-size:15px}
+footer img{width:100%;display:block}
+footer{background:#0b3d91;color:#fff;padding:15px;text-align:center}
 </style>
 </head>
 <body>
-<div class="header">GMB PHARMA KARACHI</div>
 
-<!-- FIX 1: HERO SLIDE AB SAB SE UPAR HAI - Header ke foran neeche -->
+<header>
+<div class="logo-wrap">
+<img src="images/logo.jpg">
+<div class="logo-text">
+<h1>GMB PHARMA KARACHI PAKISTAN</h1>
+<p>Where good health begins</p>
+</div>
+</div>
+<div>Home | Products | About | Contact</div>
+</header>
+
+<!-- BACKGROUND + SLIDE UPAR - Dono ek sath -->
 <div class="hero">
+<img src="images/background.jpg">
+<!-- SLIDE AB IS KE UPAR HAI -->
+<div class="hero-slide">
 <div class="hero-track">
-<img src="https://gmb-pharma.github.io/gmb/images/banner1.jpg" onerror="this.src='https://via.placeholder.com/1200x380/0a4eb5/ffffff?text=GMB+PHARMA+1'">
-<img src="https://gmb-pharma.github.io/gmb/images/banner2.jpg" onerror="this.src='https://via.placeholder.com/1200x380/1e90ff/ffffff?text=GMB+PHARMA+2'">
-<img src="https://gmb-pharma.github.io/gmb/images/banner3.jpg" onerror="this.src='https://via.placeholder.com/1200x380/10b981/ffffff?text=GMB+PHARMA+3'">
+<img src="images/display%20ki%20patti.jpg">
+<img src="images/display%20ki%20patti.jpg">
+</div>
 </div>
 </div>
 
-<!-- FIX 2: PEECHY WALI PATTI DELETE KAR DI - Yahan pehle duplicate marquee thi, ab koi patti nahi hai -->
+<!-- PEECHY WALI PATTI KHATAM - Yahan pehle patti-bg thi, ab delete hai -->
 
-<!-- FIX 3: OUR PRODUCTS SLIDER - AB TEZ 15s -->
 <h2>Our Products</h2>
-<div class="product-slider">
-<div class="product-track" id="prodTrack">
-<img src="images/gm-apti.jpg" alt="GM-APTI"><img src="images/gm-berry.jpg" alt="GM-Berry"><img src="images/gm-cal.jpg" alt="GM-CAL"><img src="images/gm-cid.jpg" alt="GM-CID"><img src="images/gm-d.jpg" alt="GM-D"><img src="images/gm-leaf.jpg" alt="GM-LEAF"><img src="images/gm-vit.jpg" alt="GM-VIT">
-<img src="images/gm-apti.jpg" alt="GM-APTI"><img src="images/gm-berry.jpg" alt="GM-Berry"><img src="images/gm-cal.jpg" alt="GM-CAL"><img src="images/gm-cid.jpg" alt="GM-CID"><img src="images/gm-d.jpg" alt="GM-D"><img src="images/gm-leaf.jpg" alt="GM-LEAF"><img src="images/gm-vit.jpg" alt="GM-VIT">
-</div>
+
+<div class="slider" id="slider">
+  <div class="product"><img src="images/GM-APTI%20SYP.jpg"><h3>GM-APTI</h3></div>
+  <div class="product"><img src="images/GM-Berry.jpg"><h3>GM-Berry</h3></div>
+  <div class="product"><img src="images/GM-CAL%20SYP.jpg"><h3>GM-CAL SYP</h3></div>
+  <div class="product"><img src="images/GM-CAL%20TAB.jpg"><h3>GM-CAL TAB</h3></div>
+  <div class="product"><img src="images/GM-CID%20SYP.jpg"><h3>GM-CID</h3></div>
+  <div class="product"><img src="images/GM-D%20DROPS.jpg"><h3>GM-D Drops</h3></div>
+  <div class="product"><img src="images/GM-LEAF%20SYP.jpg"><h3>GM-LEAF</h3></div>
+  <div class="product"><img src="images/GM-VIT%20SYP.jpg"><h3>GM-VIT SYP</h3></div>
+  <div class="product"><img src="images/GM-VIT.jpg"><h3>GM-VIT TAB</h3></div>
+  <div class="product"><img src="images/Thy-D%20plus.jpg"><h3>Thy-D Plus</h3></div>
 </div>
 
-<div class="products">
-<div class="card"><img src="images/gm-apti.jpg"><b>GM-APTI</b><small>120ml Syrup - Appetizer</small></div>
-<div class="card"><img src="images/gm-berry.jpg"><b>GM-Berry</b><small>Cranberry Vitamin C</small></div>
-<div class="card"><img src="images/gm-cal.jpg"><b>GM-CAL</b><small>Calcium & Vitamin D3</small></div>
-<div class="card"><img src="images/gm-vit.jpg"><b>GM-VIT</b><small>Multivitamins+Minerals</small></div>
-<div class="card"><img src="images/gm-leaf.jpg"><b>GM-LEAF</b><small>120ml Cough Syrup</small></div>
-<div class="card"><img src="images/gm-cid.jpg"><b>GM-CID</b><small>Antacid & Antigas</small></div>
-<div class="card"><img src="images/gm-d.jpg"><b>GM-D</b><small>Vitamin D3 Drops</small></div>
-<div class="card"><img src="images/thy-d.jpg"><b>Thy-D Plus</b><small>Vitamin D3 + Tab</small></div>
-</div>
+<footer>
+<img src="images/BOTTOM%20LINE.jpg">
+<div>© 2026 GMB PHARMA KARACHI PAKISTAN | Where good health begins</div>
+</footer>
 
-<div class="footer">GMB PHARMA KARACHI - All Rights Reserved</div>
+<script>
+// FIX 3 - Products tez - 2000ms -> 900ms, 200px -> 260px
+const s=document.getElementById('slider');
+setInterval(()=>{ s.scrollLeft+=260; if(s.scrollLeft+s.clientWidth>=s.scrollWidth) s.scrollLeft=0; },900);
+</script>
 </body>
 </html>
