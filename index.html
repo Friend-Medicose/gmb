@@ -14,23 +14,19 @@ header{background:#fff;display:flex;align-items:center;justify-content:space-bet
 nav{display:flex;gap:8px;flex-wrap:wrap}
 nav a{background:#0b3d91;color:#fff;text-decoration:none;padding:8px 14px;border-radius:20px;font-size:14px;font-weight:bold}
 nav a:hover{background:#ff6600}
-/* HERO */
 .hero{position:relative;background:#fff;text-align:center;overflow:hidden}
-.hero img{width:100%;height:auto;display:block;object-fit:contain;opacity:.35}
-/* FIX 1 - SLIDE WAZEH - Bright, Bara, Clear */
-.hero-slide{position:absolute;left:0;bottom:5px;width:100%;overflow:hidden;display:flex;align-items:center;z-index:5;background:rgba(255,255,255,.65);padding:4px 0}
-.hero-track{display:flex;animation:slidePatti 10s linear infinite}
-.hero-track img{height:155px!important;width:auto;opacity:1!important;filter:brightness(1.15) contrast(1.1);box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.hero img{width:100%;height:auto;display:block;object-fit:contain;opacity:1}
+.hero-slide{position:absolute;left:0;bottom:5px;width:100%;overflow:hidden;display:flex;align-items:center;z-index:5}
+.hero-track{display:flex;animation:slidePatti 12s linear infinite}
+.hero-track img{height:95px!important;width:auto;opacity:0.5!important}
 @keyframes slidePatti{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 h2{text-align:center;color:#0b3d91;font-size:28px;margin:20px 0 10px}
-/* FIX 2 - PRODUCTS TEZ + CONTINUE - Bina ruke */
 .slider-wrap{overflow:hidden;width:100%;padding:20px 0}
 .slider-track{display:flex;gap:15px;animation:prodSlide 14s linear infinite;width:max-content}
 @keyframes prodSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .product{min-width:180px;background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 2px 8px #ddd;flex-shrink:0}
 .product img{width:100%;height:160px;object-fit:contain}
 .product h3{color:#0b3d91;font-size:15px}
-/* LIST + ABOUT + CONTACT */
 .section{padding:25px;max-width:900px;margin:auto}
 .list-box{background:#f4f8ff;border:1px solid #cfe0ff;border-radius:12px;padding:18px}
 .list-box ol{font-size:16px;line-height:1.9;color:#222}
@@ -47,7 +43,7 @@ footer{background:#0b3d91;color:#fff;padding:15px;text-align:center}
 
 <header>
 <div class="logo-wrap">
-<img src="images/logo.jpg?v=4">
+<img src="images/logo.jpg?v=5">
 <div class="logo-text">
 <h1>GMB PHARMA KARACHI PAKISTAN</h1>
 <p>Where good health begins</p>
@@ -61,41 +57,38 @@ footer{background:#0b3d91;color:#fff;padding:15px;text-align:center}
 </nav>
 </header>
 
-<!-- HOME = DISPLAY -->
 <div id="home" class="hero">
-<img src="images/background.jpg?v=4">
+<img src="images/background.jpg?v=5">
 <div class="hero-slide"><div class="hero-track">
-<img src="images/display%20ki%20patti.jpg?v=4">
-<img src="images/display%20ki%20patti.jpg?v=4">
+<img src="images/display%20ki%20patti.jpg?v=5">
+<img src="images/display%20ki%20patti.jpg?v=5">
 </div></div>
 </div>
 
 <h2>Our Products</h2>
 <div class="slider-wrap"><div class="slider-track">
-  <div class="product"><img src="images/GM-APTI%20SYP.jpg?v=4"><h3>GM-APTI</h3></div>
-  <div class="product"><img src="images/GM-Berry.jpg?v=4"><h3>GM-Berry</h3></div>
-  <div class="product"><img src="images/GM-CAL%20SYP.jpg?v=4"><h3>GM-CAL SYP</h3></div>
-  <div class="product"><img src="images/GM-CAL%20TAB.jpg?v=4"><h3>GM-CAL TAB</h3></div>
-  <div class="product"><img src="images/GM-CID%20SYP.jpg?v=4"><h3>GM-CID</h3></div>
-  <div class="product"><img src="images/GM-D%20DROPS.jpg?v=4"><h3>GM-D Drops</h3></div>
-  <div class="product"><img src="images/GM-LEAF%20SYP.jpg?v=4"><h3>GM-LEAF</h3></div>
-  <div class="product"><img src="images/GM-VIT%20SYP.jpg?v=4"><h3>GM-VIT SYP</h3></div>
-  <div class="product"><img src="images/GM-VIT.jpg?v=4"><h3>GM-VIT TAB</h3></div>
-  <div class="product"><img src="images/Thy-D%20plus.jpg?v=4"><h3>Thy-D Plus</h3></div>
-  <!-- Duplicate for continuous loop -->
-  <div class="product"><img src="images/GM-APTI%20SYP.jpg?v=4"><h3>GM-APTI</h3></div>
-  <div class="product"><img src="images/GM-Berry.jpg?v=4"><h3>GM-Berry</h3></div>
-  <div class="product"><img src="images/GM-CAL%20SYP.jpg?v=4"><h3>GM-CAL SYP</h3></div>
-  <div class="product"><img src="images/GM-CAL%20TAB.jpg?v=4"><h3>GM-CAL TAB</h3></div>
-  <div class="product"><img src="images/GM-CID%20SYP.jpg?v=4"><h3>GM-CID</h3></div>
-  <div class="product"><img src="images/GM-D%20DROPS.jpg?v=4"><h3>GM-D Drops</h3></div>
-  <div class="product"><img src="images/GM-LEAF%20SYP.jpg?v=4"><h3>GM-LEAF</h3></div>
-  <div class="product"><img src="images/GM-VIT%20SYP.jpg?v=4"><h3>GM-VIT SYP</h3></div>
-  <div class="product"><img src="images/GM-VIT.jpg?v=4"><h3>GM-VIT TAB</h3></div>
-  <div class="product"><img src="images/Thy-D%20plus.jpg?v=4"><h3>Thy-D Plus</h3></div>
+  <div class="product"><img src="images/GM-APTI%20SYP.jpg?v=5"><h3>GM-APTI</h3></div>
+  <div class="product"><img src="images/GM-Berry.jpg?v=5"><h3>GM-Berry</h3></div>
+  <div class="product"><img src="images/GM-CAL%20SYP.jpg?v=5"><h3>GM-CAL SYP</h3></div>
+  <div class="product"><img src="images/GM-CAL%20TAB.jpg?v=5"><h3>GM-CAL TAB</h3></div>
+  <div class="product"><img src="images/GM-CID%20SYP.jpg?v=5"><h3>GM-CID</h3></div>
+  <div class="product"><img src="images/GM-D%20DROPS.jpg?v=5"><h3>GM-D Drops</h3></div>
+  <div class="product"><img src="images/GM-LEAF%20SYP.jpg?v=5"><h3>GM-LEAF</h3></div>
+  <div class="product"><img src="images/GM-VIT%20SYP.jpg?v=5"><h3>GM-VIT SYP</h3></div>
+  <div class="product"><img src="images/GM-VIT.jpg?v=5"><h3>GM-VIT TAB</h3></div>
+  <div class="product"><img src="images/Thy-D%20plus.jpg?v=5"><h3>Thy-D Plus</h3></div>
+  <div class="product"><img src="images/GM-APTI%20SYP.jpg?v=5"><h3>GM-APTI</h3></div>
+  <div class="product"><img src="images/GM-Berry.jpg?v=5"><h3>GM-Berry</h3></div>
+  <div class="product"><img src="images/GM-CAL%20SYP.jpg?v=5"><h3>GM-CAL SYP</h3></div>
+  <div class="product"><img src="images/GM-CAL%20TAB.jpg?v=5"><h3>GM-CAL TAB</h3></div>
+  <div class="product"><img src="images/GM-CID%20SYP.jpg?v=5"><h3>GM-CID</h3></div>
+  <div class="product"><img src="images/GM-D%20DROPS.jpg?v=5"><h3>GM-D Drops</h3></div>
+  <div class="product"><img src="images/GM-LEAF%20SYP.jpg?v=5"><h3>GM-LEAF</h3></div>
+  <div class="product"><img src="images/GM-VIT%20SYP.jpg?v=5"><h3>GM-VIT SYP</h3></div>
+  <div class="product"><img src="images/GM-VIT.jpg?v=5"><h3>GM-VIT TAB</h3></div>
+  <div class="product"><img src="images/Thy-D%20plus.jpg?v=5"><h3>Thy-D Plus</h3></div>
 </div></div>
 
-<!-- PRODUCTS LIST - Number Wise -->
 <div id="products-list" class="section">
 <h2>Our Products - Complete List</h2>
 <div class="list-box"><ol>
@@ -112,18 +105,16 @@ footer{background:#0b3d91;color:#fff;padding:15px;text-align:center}
 </ol></div>
 </div>
 
-<!-- ABOUT -->
 <div id="about" class="section">
 <h2>About Us</h2>
 <div class="about-box">
-<b>Our Ambition — Sehat Har Ghar Tak</b><br><br>
-GMB Pharma ka mission sirf dawa banana nahi, balke Pakistan ke har ghar tak behtareen, mehfooz aur asar-daar dawa pahunchana hai. Humara yakeen hai ke achi sehat har shakhs ka haq hai — chahe wo bachcha ho, jawan ho ya buzurg.<br><br>
-Hum apni tamam medicines ko international quality standards ke mutabiq, halal aur mehfooz raw material se, modern manufacturing ke zariye tayyar karte hain. Har product pehle testing, phir packing aur phir aap tak. Hamara ambition hai ke Pakistan ki apni pharma company, duniya ke mayaar ki dawa, apne logon ke liye, munasib keemat par banaye — taake koi bacha kamzori ki wajah se peeche na rahe aur koi maa baap apne bachon ki sehat ke liye pareshan na hon.<br><br>
+<b>Our Ambition — Health for Every Home</b><br><br>
+The mission of GMB Pharma is not only to manufacture medicines, but to deliver the finest, safest and most effective medicines to every home in Pakistan. We believe that good health is the right of every person — whether a child, a young adult or an elder.<br><br>
+We prepare all our medicines in accordance with international quality standards, using halal and safe raw materials, through modern manufacturing. Every product goes through testing first, then packing, and then reaches you. Our ambition is that a Pakistani pharmaceutical company manufactures world-standard medicines for its own people at an affordable price — so that no child is left behind due to weakness, and no parent has to worry about the health of their children.<br><br>
 <b>Where good health begins — GMB Pharma</b>
 </div>
 </div>
 
-<!-- CONTACT - Invoice se -->
 <div id="contact" class="section">
 <h2>Contact Us</h2>
 <div class="contact-box">
@@ -140,7 +131,7 @@ Hum apni tamam medicines ko international quality standards ke mutabiq, halal au
 </div>
 
 <footer>
-<img src="images/BOTTOM%20LINE.jpg?v=4">
+<img src="images/BOTTOM%20LINE.jpg?v=5">
 <div>© 2026 GMB PHARMA KARACHI PAKISTAN | Where good health begins</div>
 </footer>
 
