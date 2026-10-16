@@ -5,42 +5,51 @@
 <title>GM PHARMA - Trusted Care</title>
 <style>
 body{font-family:Arial;margin:0;background:#fff5f0}
-header{background:#fff;display:flex;justify-content:space-between;padding:15px 30px;align-items:center}
-.logo{font-size:28px;font-weight:bold;color:#0b3d91}
-.hero{background:#ffd9c2;padding:40px;text-align:center}
-.hero h1{color:#0b3d91;font-size:36px}
-.slider{display:flex;overflow:hidden;gap:15px;padding:20px;scroll-behavior:smooth}
+header{background:#fff;display:flex;justify-content:space-between;padding:10px 25px;align-items:center}
+.logo img{height:60px}
+.hero{background-image:url('images/background.jpg');background-size:cover;background-position:center;padding:20px;text-align:center}
+.hero img{width:100%;max-width:900px;border-radius:12px}
+.patti img{width:100%;display:block}
+.slider{display:flex;overflow:hidden;gap:15px;padding:20px}
 .product{min-width:180px;background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 2px 8px #ddd}
 .product img{width:100%;height:160px;object-fit:contain}
-.product h3{font-size:15px;color:#0b3d91;margin:5px 0}
-footer{background:#0b3d91;color:#fff;padding:20px;text-align:center}
+.product h3{color:#0b3d91;font-size:15px}
+footer img{width:100%;display:block}
+footer{background:#0b3d91;color:#fff;padding:15px;text-align:center}
 </style>
 </head>
 <body>
 
-<header><div class="logo">GM PHARMA</div><div>Home | Products | About | Contact</div></header>
+<header>
+<div class="logo"><img src="images/logo.jpg"></div>
+<div>Home | Products | About | Contact</div>
+</header>
 
 <div class="hero">
-<h1>Trusted Care. Quality Medicine.</h1>
-<p>For a Healthier Tomorrow.</p>
+<img src="images/main%20display.jpg">
 </div>
+
+<div class="patti"><img src="images/display%20ki%20patti.jpg"></div>
 
 <h2 style="text-align:center;color:#0b3d91">Our Products - Auto Sliding</h2>
 
 <div class="slider" id="slider">
-  <div class="product"><img src="gm-apti.jpg"><h3>GM-APTI</h3></div>
-  <div class="product"><img src="gm-berry.jpg"><h3>GM-Berry</h3></div>
-  <div class="product"><img src="gm-cal-syp.jpg"><h3>GM-CAL SYP</h3></div>
-  <div class="product"><img src="gm-cal-tab.jpg"><h3>GM-CAL TAB</h3></div>
-  <div class="product"><img src="gm-cid.jpg"><h3>GM-CID</h3></div>
-  <div class="product"><img src="gm-d.jpg"><h3>GM-D Drops</h3></div>
-  <div class="product"><img src="gm-leaf.jpg"><h3>GM-LEAF</h3></div>
-  <div class="product"><img src="gm-vit-syp.jpg"><h3>GM-VIT SYP</h3></div>
-  <div class="product"><img src="gm-vit-tab.jpg"><h3>GM-VIT TAB</h3></div>
-  <div class="product"><img src="thy-d-plus.jpg"><h3>Thy-D Plus</h3></div>
+  <div class="product"><img src="images/GM-APTI%20SYP.jpg"><h3>GM-APTI</h3></div>
+  <div class="product"><img src="images/GM-Berry.jpg"><h3>GM-Berry</h3></div>
+  <div class="product"><img src="images/GM-CAL%20SYP.jpg"><h3>GM-CAL SYP</h3></div>
+  <div class="product"><img src="images/GM-CAL%20TAB.jpg"><h3>GM-CAL TAB</h3></div>
+  <div class="product"><img src="images/GM-CID%20SYP.jpg"><h3>GM-CID</h3></div>
+  <div class="product"><img src="images/GM-D%20DROPS.jpg"><h3>GM-D Drops</h3></div>
+  <div class="product"><img src="images/GM-LEAF%20SYP.jpg"><h3>GM-LEAF</h3></div>
+  <div class="product"><img src="images/GM-VIT%20SYP.jpg"><h3>GM-VIT SYP</h3></div>
+  <div class="product"><img src="images/GM-VIT.jpg"><h3>GM-VIT TAB</h3></div>
+  <div class="product"><img src="images/Thy-D%20plus.jpg"><h3>Thy-D Plus</h3></div>
 </div>
 
-<footer>© 2026 GM PHARMA | Trusted Pharmaceuticals | All Rights Reserved</footer>
+<footer>
+<img src="images/BOTTOM%20LINE.jpg">
+<div>© 2026 GM PHARMA | Trusted Pharmaceuticals | All Rights Reserved</div>
+</footer>
 
 <script>
 const s=document.getElementById('slider');
