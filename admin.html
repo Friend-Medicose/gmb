@@ -1,97 +1,59 @@
-<!DOCTYPE html>
-<html lang="ur">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GMB PHARMA - Admin / Invoice System</title>
-<style>
-*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:#f2f2f2}
+<!DOCTYPE html><html lang="ur"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GMB PHARMA - Admin</title>
+<style>*{box-sizing:border-box}body{font-family:Arial;margin:0;background:#f2f2f2}
 .top{background:#fff;padding:12px;text-align:center;border-bottom:4px solid #0b3d91}
-.top h1{color:#0b3d91;margin:0;font-size:32px;letter-spacing:2px}
-.top p{margin:2px}.badge{background:#0b3d91;color:#fff;display:inline-block;padding:3px 14px;font-weight:700}
-.wrap{max-width:1100px;margin:auto;padding:12px}
-.card{background:#fff;padding:12px;border-radius:10px;margin-bottom:12px;box-shadow:0 1px 5px #0002}
+.wrap{max-width:1100px;margin:auto;padding:12px}.card{background:#fff;padding:12px;border-radius:10px;margin-bottom:12px}
 input,select{padding:8px;border:1px solid #ccc;border-radius:6px;width:100%}
 .grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
-.btn{background:#0b3d91;color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}
-.btn.g{background:#1a9c4a}.btn.o{background:#ff6a00}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #333;padding:6px;text-align:center}
-th{background:#e8eefc}.total{font-weight:700;font-size:16px;text-align:right}
-.footer{border:1px solid #333;padding:10px;font-size:12px;line-height:1.5;margin-top:10px}
-@media print{.no-print{display:none!important}body{background:#fff}.card{box-shadow:none}}
-</style>
-</head>
-<body>
-<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;align-items:center;justify-content:center;z-index:9999">
-<div style="background:#fff;padding:25px;border-radius:12px;text-align:center;width:90%;max-width:340px">
-<h2 style="color:#0b3d91;margin:0">GMB PHARMA</h2><p>Admin Login</p>
-<input type="password" id="passInput" placeholder="Password dalen" style="padding:12px;width:100%;border:1px solid #ccc;border-radius:8px;font-size:18px">
-<br><br><button onclick="checkPass()" style="background:#0b3d91;color:#fff;border:0;padding:12px 20px;border-radius:8px;width:100%;font-weight:bold">OPEN ADMIN</button>
-<p id="err" style="color:red;font-size:13px"></p></div></div>
-<script>
-function checkPass(){let p=document.getElementById('passInput').value;if(p==="Gmb8888"){document.getElementById('lock').style.display='none';localStorage.setItem('gmb_login','ok');}else{document.getElementById('err').innerText="Wrong Password!";}}
-if(localStorage.getItem('gmb_login')==='ok'){document.addEventListener('DOMContentLoaded',()=>{document.getElementById('lock').style.display='none';});}
-</script>
+.btn{background:#0b3d91;color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}.btn.g{background:#1a9c4a}.btn.o{background:#ff6a00}.btn.r{background:#d32f2f}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #333;padding:6px;text-align:center}th{background:#e8eefc}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:9999}
+.modal>div{background:#fff;width:95%;max-width:800px;max-height:90vh;overflow:auto;padding:15px}
+@page{size:A4;margin:10mm}@media print{body{background:#fff}.no-print{display:none!important}.card{box-shadow:none;border:1px solid #000}.wrap{max-width:100%}}
+</style></head><body>
+<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;align-items:center;justify-content:center;z-index:10000"><div style="background:#fff;padding:25px;border-radius:12px;text-align:center;width:90%;max-width:340px"><h2 style="color:#0b3d91;margin:0">GMB PHARMA</h2><p>Admin Login</p><input type="password" id="passInput" placeholder="Password dalen" style="padding:12px;width:100%;border:1px solid #ccc;border-radius:8px;font-size:18px"><br><br><button onclick="checkPass()" style="background:#0b3d91;color:#fff;border:0;padding:12px;width:100%;border-radius:8px;font-weight:bold">OPEN ADMIN</button><p id="err" style="color:red"></p></div></div>
+<script>function checkPass(){if(document.getElementById('passInput').value==="Gmb8888"){document.getElementById('lock').style.display='none';localStorage.setItem('gmb_login','ok')}else{document.getElementById('err').innerText="Wrong Password!"}}if(localStorage.getItem('gmb_login')==='ok'){document.addEventListener('DOMContentLoaded',()=>{document.getElementById('lock').style.display='none'})}</script>
 <div class="top no-print"><b style="font-size:22px">GMB PHARMA - ADMIN PANEL</b></div>
 <div class="wrap">
+<div class="card no-print"><h3>🔍 Customer Search - Code / CNIC</h3><div class="grid"><input id="searchBox" placeholder="Code ya CNIC likhen"><button class="btn" onclick="searchCust()">Search</button></div><div id="searchResult"></div></div>
 <div class="card" id="invoiceArea">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<div style="font-size:42px;font-weight:800;color:#0b3d91">ⓖ GMB PHARMA</div>
-<div style="text-align:center"><span class="badge">INVOICE</span>
-<h2 style="margin:4px;color:#0b3d91">GMB PHARMA</h2>
-<p><b>Where good health begins</b><br>Pharmaceutical Distribution<br>Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi - Pakistan<br>0345-0707464, 0300-3953178<br>gmb.pharma2023@gmail.com</p></div>
-<div><b>NTN: 8781968</b><br><b>License No: 0447</b></div>
-</div>
-<div class="grid" style="margin-top:10px">
-<div>Invoice No: <input id="invNo" value="6780"></div>
-<div>Date: <input type="date" id="invDate"></div>
-<div>S.Rep: <input id="srep" placeholder="S.Rep"></div>
-<div>S.Man: <input id="sman" placeholder="S.Man"></div>
-<div>Customer Code: <input id="cCode" placeholder="Code"></div>
-<div>Customer Name: <input id="cName" placeholder="Name"></div>
-<div>Address: <input id="cAddr" placeholder="Address"></div>
-<div>CNIC: <input id="cnic" placeholder="CNIC"></div>
-</div>
-<h3>Product Entry / Sale</h3>
-<div class="grid">
-<select id="pSelect"></select>
-<input id="pQty" type="number" value="1" placeholder="Qty">
-<input id="pBon" type="number" value="0" placeholder="Bon">
-<input id="pDisc" type="number" value="0" placeholder="Dist Disc %">
-<input id="pComp" type="number" value="0" placeholder="Comp Disc %">
-<input id="pGst" type="number" value="0" placeholder="GST %">
-<input id="pBatch" placeholder="Batch/Expiry">
-</div>
-<button class="btn no-print" onclick="addItem()" style="margin-top:8px">+ Item Add Karen</button>
-<button class="btn g no-print" onclick="addProductPrompt()">+ New Product Entry</button>
-<table style="margin-top:12px"><thead><tr><th>S.No</th><th>Description</th><th>M.R.P</th><th>TP</th><th>Qty</th><th>Bon</th><th>Batch/Expiry</th><th>Amount</th><th>Dist Disc</th><th>Comp Disc</th><th>GST</th><th>Add GST</th><th>Net Amount</th><th class="no-print">X</th></tr></thead><tbody id="rows"></tbody></table>
-<div class="total">Total Amount: <span id="tAmt">0</span> | Advance Tax u/s 236(h) 0.5%: <span id="tTax">0</span> | Grand Total: <span id="gTotal">0</span></div>
+<div style="display:flex;justify-content:space-between"><div style="font-size:38px;font-weight:800;color:#0b3d91">GMB PHARMA</div><div style="text-align:center"><b>INVOICE</b><p>Where good health begins<br>Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi<br>0345-0707464, 0300-3953178 | NTN: 8781968 | Lic: 0447</p></div></div>
+<div class="grid" style="margin-top:10px"><div>Invoice No: <input id="invNo" value="6780"></div><div>Date: <input type="date" id="invDate"></div><div>S.Rep: <input id="srep"></div><div>S.Man: <input id="sman"></div><div>Customer Code: <input id="cCode" placeholder="Code"></div><div>Customer Name: <input id="cName" placeholder="Name"></div><div>Address: <input id="cAddr"></div><div>CNIC: <input id="cnic" placeholder="CNIC"></div></div>
+<h3>Product Entry / Sale - Price Apni Marzi Se Fix Karen</h3>
+<div class="grid"><select id="pSelect"></select><input id="pQty" type="number" value="1" placeholder="Qty"><input id="pBon" type="number" value="0" placeholder="Bon"><input id="pBatch" placeholder="Batch/Expiry"></div>
+<div class="grid" style="margin-top:8px"><input id="pMRP" type="number" placeholder="MRP - Edit kar sakte hain"><input id="pTP" type="number" placeholder="TP - Edit kar sakte hain"><input id="pDisc" type="number" value="0" placeholder="Dist Disc %"><input id="pComp" type="number" value="0" placeholder="Comp Disc %"><input id="pGst" type="number" value="0" placeholder="GST %"></div>
+<button class="btn no-print" onclick="addItem()" style="margin-top:8px">+ Item Add Karen</button> <button class="btn g no-print" onclick="addProductPrompt()">+ New Product Entry</button> <button class="btn no-print" onclick="editProductPrice()">✏️ Product Price Edit</button>
+<table style="margin-top:12px"><thead><tr><th>S.No</th><th>Description</th><th>M.R.P</th><th>TP</th><th>Qty</th><th>Bon</th><th>Batch</th><th>Amount</th><th>Dist Disc</th><th>Comp Disc</th><th>GST</th><th>Net</th><th class="no-print">X</th></tr></thead><tbody id="rows"></tbody></table>
+<div style="text-align:right;font-weight:700">Total: <span id="tAmt">0</span> | Tax 0.5%: <span id="tTax">0</span> | Grand Total: <span id="gTotal">0</span></div>
 <p>Rupees: <b id="inWords"></b> Only | Total Items: <span id="tItems">0</span></p>
-<div class="footer"><b>WARRANTY:</b> Under Section 23(1)(i) of Drugs Act, 1976 We do Hereby give this warranty that the drugs described in this invoice and sold by us do not contravene in any way with the provision of section 23 of the drug Act, 1976.<br><br><b>NOTE:</b><br>• Expired products will not be accepted back unless written 4 Months in advance of the expiry date.<br>• Goods once sold will not be taken back or exchanged.<br><br><div style="text-align:right">_________________________<br><b>Signature</b></div></div>
+<div style="border:1px solid #333;padding:10px;font-size:12px"><b>WARRANTY:</b> Under Section 23(1)(i) Drugs Act 1976 - Warranty as per law.<br><b>NOTE:</b> Expired products 4 Months pehle written me batayen. Goods once sold will not be taken back.<br><div style="text-align:right">______<br><b>Signature</b></div></div>
 </div>
-<div class="card no-print">
-<button class="btn" onclick="saveInvoice()">Save Invoice</button>
-<button class="btn g" onclick="window.print()">Print Invoice</button>
-<button class="btn o" onclick="showSummary()">Summary Page</button>
-<button class="btn" onclick="downloadBackup()">Google Drive Backup (Download)</button>
-<p style="font-size:12px">Google Client ID: PASTE_YOUR_GOOGLE_CLIENT_ID_HERE</p>
-</div>
+<div class="card no-print"><button class="btn" onclick="saveInvoice()">Save Invoice</button> <button class="btn g" onclick="viewInvoice()">👁️ Invoice View</button> <button class="btn g" onclick="window.print()">🖨️ Print Invoice (A4)</button> <button class="btn o" onclick="showInvoices()">📂 Backup / Invoice List</button> <button class="btn o" onclick="showSummary()">📊 Summary Sheet</button></div>
+<div class="card no-print" id="invListCard" style="display:none"><h3>Invoice List - Edit / View / Delete</h3><div id="invList"></div></div>
+<div class="card no-print" id="summaryCard" style="display:none"><h3>Summary Sheet - Date Wise</h3>From <input type="date" id="fromD"> To <input type="date" id="toD"> <button class="btn" onclick="filterSummary()">Show</button><div id="summaryList"></div></div>
 <div class="card no-print"><h3>Stock - Total / Bachi Hui</h3><div id="stockList"></div></div>
-<div class="card no-print" id="summaryCard" style="display:none"><h3>Summary - Date Wise</h3>From <input type="date" id="fromD"> To <input type="date" id="toD"> <button class="btn" onclick="filterSummary()">Show</button> <button class="btn g" onclick="window.print()">Print Summary</button><div id="summaryList"></div></div>
 </div>
+<div class="modal" id="viewModal"><div><h2>INVOICE PREVIEW - A4</h2><div id="viewContent"></div><button class="btn" onclick="window.print()">Print Karen</button> <button class="btn r" onclick="document.getElementById('viewModal').style.display='none'">Band Karen</button></div></div>
 <script>
-let products=JSON.parse(localStorage.getItem('gmb_products')||'[{"name":"SILDA 25MG TABLET 4S","code":"33722","mrp":0,"tp":340,"stock":100},{"name":"SILDA 50MG TABLET 4S","code":"33723","mrp":0,"tp":680,"stock":100},{"name":"XANAX 0.5MG TAB 30S","code":"35301","mrp":0,"tp":424.15,"stock":100},{"name":"XANAX 1 MG TAB 30S","code":"35302","mrp":0,"tp":849.15,"stock":100}]');
+let products=JSON.parse(localStorage.getItem('gmb_products')||'[{"name":"Product 1 - Website Product","code":"1001","mrp":0,"tp":0,"stock":100},{"name":"Product 2 - Website Product","code":"1002","mrp":0,"tp":0,"stock":100},{"name":"Product 3 - Website Product","code":"1003","mrp":0,"tp":0,"stock":100},{"name":"Product 4 - Website Product","code":"1004","mrp":0,"tp":0,"stock":100},{"name":"Product 5 - Website Product","code":"1005","mrp":0,"tp":0,"stock":100},{"name":"Product 6 - Website Product","code":"1006","mrp":0,"tp":0,"stock":100},{"name":"Product 7 - Website Product","code":"1007","mrp":0,"tp":0,"stock":100},{"name":"Product 8 - Website Product","code":"1008","mrp":0,"tp":0,"stock":100},{"name":"Product 9 - Website Product","code":"1009","mrp":0,"tp":0,"stock":100},{"name":"Product 10 - Website Product","code":"1010","mrp":0,"tp":0,"stock":100}]');
 let invoices=JSON.parse(localStorage.getItem('gmb_invoices')||'[]');let items=[];
-function renderProducts(){let s=document.getElementById('pSelect');s.innerHTML='';products.forEach((p,i)=>{s.innerHTML+=`<option value="${i}">${p.code} - ${p.name} | TP ${p.tp} | Stock ${p.stock}</option>`});document.getElementById('stockList').innerHTML=products.map(p=>`<div>${p.name} - Bachi: <b>${p.stock}</b> | TP ${p.tp}</div>`).join('')}
-function addProductPrompt(){let n=prompt('Product Name');if(!n)return;let c=prompt('Code');let tp=parseFloat(prompt('TP Price')||0);let mrp=parseFloat(prompt('MRP')||0);let st=parseInt(prompt('Stock Qty')||0);products.push({name:n,code:c,tp:tp,mrp:mrp,stock:st});localStorage.setItem('gmb_products',JSON.stringify(products));renderProducts();alert('Product Save Ho Gaya')}
-function addItem(){let i=document.getElementById('pSelect').value;let p=products[i];let q=parseInt(document.getElementById('pQty').value||1);let bon=parseInt(document.getElementById('pBon').value||0);let d=parseFloat(document.getElementById('pDisc').value||0);let cd=parseFloat(document.getElementById('pComp').value||0);let g=parseFloat(document.getElementById('pGst').value||0);let amt=p.tp*q;let dd=amt*d/100;let cdd=amt*cd/100;let gst=amt*g/100;let net=amt-dd-cdd+gst;items.push({code:p.code,name:p.name,mrp:p.mrp,tp:p.tp,qty:q,bon:bon,batch:document.getElementById('pBatch').value,amt:amt,dd:dd,cdd:cdd,gst:gst,net:net});p.stock-=q;localStorage.setItem('gmb_products',JSON.stringify(products));draw()}
-function draw(){let tb=document.getElementById('rows');tb.innerHTML='';let tot=0;items.forEach((it,idx)=>{tot+=it.net;tb.innerHTML+=`<tr><td>${idx+1}</td><td>${it.code} - ${it.name}</td><td>${it.mrp}</td><td>${it.tp}</td><td>${it.qty}</td><td>${it.bon}</td><td>${it.batch}</td><td>${it.amt.toFixed(2)}</td><td>${it.dd.toFixed(2)}</td><td>${it.cdd.toFixed(2)}</td><td>${it.gst.toFixed(2)}</td><td>0</td><td>${it.net.toFixed(2)}</td><td class="no-print"><button onclick="items.splice(${idx},1);draw()">X</button></td></tr>`});let tax=tot*0.005;document.getElementById('tAmt').innerText=tot.toFixed(2);document.getElementById('tTax').innerText=tax.toFixed(2);document.getElementById('gTotal').innerText=(tot+tax).toFixed(2);document.getElementById('tItems').innerText=items.length;document.getElementById('inWords').innerText=numberToWords(Math.round(tot+tax));renderProducts()}
-function numberToWords(n){if(n==0)return 'Zero';const a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];const b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];function w(x){if(x<20)return a[x];if(x<100)return b[Math.floor(x/10)]+(x%10?' '+a[x%10]:'');if(x<1000)return a[Math.floor(x/100)]+' Hundred '+(x%100?w(x%100):'');return w(Math.floor(x/1000))+' Thousand '+(x%1000?w(x%1000):'')}return w(n)}
-function saveInvoice(){let inv={no:document.getElementById('invNo').value,date:document.getElementById('invDate').value||new Date().toISOString().slice(0,10),cust:document.getElementById('cName').value,items:items,total:document.getElementById('gTotal').innerText};invoices.push(inv);localStorage.setItem('gmb_invoices',JSON.stringify(invoices));alert('Invoice Save Ho Gayi - Total '+inv.total)}
-function downloadBackup(){let blob=new Blob([JSON.stringify({products,invoices},null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gmb-backup.json';a.click();alert('Backup download ho gaya, is ko Google Drive me upload kar den')}
-function showSummary(){document.getElementById('summaryCard').style.display='block';document.getElementById('summaryList').innerHTML=invoices.map(i=>`<div>${i.date} - Inv ${i.no} - ${i.cust} - Rs ${i.total}</div>`).join('')||'No data'}
-function filterSummary(){let f=document.getElementById('fromD').value,t=document.getElementById('toD').value;let fl=invoices.filter(i=>i.date>=f&&i.date<=t);document.getElementById('summaryList').innerHTML=fl.map(i=>`<div>${i.date} - Inv ${i.no} - ${i.cust} - Rs ${i.total}</div>`).join('')||'No data in date range'}
+let customers=JSON.parse(localStorage.getItem('gmb_customers')||'[]');
+function renderProducts(){let s=document.getElementById('pSelect');s.innerHTML='';products.forEach((p,i)=>{s.innerHTML+=`<option value="${i}">${p.code} - ${p.name} | MRP ${p.mrp} | TP ${p.tp} | Stock ${p.stock}</option>`});onProdChange();document.getElementById('stockList').innerHTML=products.map(p=>`${p.name} - Bachi: <b>${p.stock}</b> | TP ${p.tp} | MRP ${p.mrp}<br>`).join('')}
+function onProdChange(){let p=products[document.getElementById('pSelect').value];if(!p)return;document.getElementById('pMRP').value=p.mrp;document.getElementById('pTP').value=p.tp}
+document.getElementById('pSelect').addEventListener('change',onProdChange);
+function addProductPrompt(){let n=prompt('Product Name');if(!n)return;let c=prompt('Code');let mrp=parseFloat(prompt('MRP')||0);let tp=parseFloat(prompt('TP')||0);let st=parseInt(prompt('Stock')||0);products.push({name:n,code:c,mrp:mrp,tp:tp,stock:st});localStorage.setItem('gmb_products',JSON.stringify(products));renderProducts();alert('Product Save Ho Gaya')}
+function editProductPrice(){let i=document.getElementById('pSelect').value;let p=products[i];let nm=prompt('Name',p.name);let mrp=parseFloat(prompt('New MRP',p.mrp));let tp=parseFloat(prompt('New TP',p.tp));let st=parseInt(prompt('Stock',p.stock));p.name=nm;p.mrp=mrp;p.tp=tp;p.stock=st;localStorage.setItem('gmb_products',JSON.stringify(products));renderProducts();alert('Price Fix Ho Gayi')}
+function addItem(){let i=document.getElementById('pSelect').value;let p=products[i];let mrp=parseFloat(document.getElementById('pMRP').value||p.mrp);let tp=parseFloat(document.getElementById('pTP').value||p.tp);p.mrp=mrp;p.tp=tp;localStorage.setItem('gmb_products',JSON.stringify(products));let q=parseInt(document.getElementById('pQty').value||1);let bon=parseInt(document.getElementById('pBon').value||0);let d=parseFloat(document.getElementById('pDisc').value||0);let cd=parseFloat(document.getElementById('pComp').value||0);let g=parseFloat(document.getElementById('pGst').value||0);let amt=tp*q;let dd=amt*d/100;let cdd=amt*cd/100;let gst=amt*g/100;let net=amt-dd-cdd+gst;items.push({code:p.code,name:p.name,mrp:mrp,tp:tp,qty:q,bon:bon,batch:document.getElementById('pBatch').value,amt:amt,dd:dd,cdd:cdd,gst:gst,net:net});p.stock-=q;localStorage.setItem('gmb_products',JSON.stringify(products));draw()}
+function draw(){let tb=document.getElementById('rows');tb.innerHTML='';let tot=0;items.forEach((it,idx)=>{tot+=it.net;tb.innerHTML+=`<tr><td>${idx+1}</td><td>${it.code} - ${it.name}</td><td>${it.mrp}</td><td>${it.tp}</td><td>${it.qty}</td><td>${it.bon}</td><td>${it.batch}</td><td>${it.amt.toFixed(2)}</td><td>${it.dd.toFixed(2)}</td><td>${it.cdd.toFixed(2)}</td><td>${it.gst.toFixed(2)}</td><td>${it.net.toFixed(2)}</td><td class="no-print"><button onclick="items.splice(${idx},1);draw()">X</button></td></tr>`});let tax=tot*0.005;document.getElementById('tAmt').innerText=tot.toFixed(2);document.getElementById('tTax').innerText=tax.toFixed(2);document.getElementById('gTotal').innerText=(tot+tax).toFixed(2);document.getElementById('tItems').innerText=items.length;document.getElementById('inWords').innerText=numWords(Math.round(tot+tax));renderProducts()}
+function numWords(n){if(n==0)return 'Zero';const a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];const b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];function w(x){if(x<20)return a[x];if(x<100)return b[Math.floor(x/10)]+(x%10?' '+a[x%10]:'');if(x<1000)return a[Math.floor(x/100)]+' Hundred '+(x%100?w(x%100):'');return w(Math.floor(x/1000))+' Thousand '+(x%1000?w(x%1000):'')}return w(n)}
+function viewInvoice(){document.getElementById('viewContent').innerHTML=document.getElementById('invoiceArea').innerHTML;document.getElementById('viewModal').style.display='flex'}
+function saveInvoice(){let inv={no:document.getElementById('invNo').value,date:document.getElementById('invDate').value||new Date().toISOString().slice(0,10),code:document.getElementById('cCode').value,cust:document.getElementById('cName').value,cnic:document.getElementById('cnic').value,addr:document.getElementById('cAddr').value,items:items,total:document.getElementById('gTotal').innerText};invoices.push(inv);customers.push({code:inv.code,cnic:inv.cnic,name:inv.cust,addr:inv.addr,total:inv.total,date:inv.date});localStorage.setItem('gmb_invoices',JSON.stringify(invoices));localStorage.setItem('gmb_customers',JSON.stringify(customers));alert('Invoice Save - Total '+inv.total)}
+function showInvoices(){document.getElementById('invListCard').style.display='block';document.getElementById('invList').innerHTML=invoices.map((i,idx)=>`<div style="border:1px solid #ddd;padding:8px;margin:5px">Inv ${i.no} - ${i.date} - ${i.code} - ${i.cust} - Rs ${i.total} <button class="btn" onclick="viewInv(${idx})">View</button> <button class="btn g" onclick="editInv(${idx})">Edit</button> <button class="btn r" onclick="delInv(${idx})">Delete</button></div>`).join('')||'No Invoice'}
+function viewInv(i){let inv=invoices[i];alert('Invoice '+inv.no+'\nCustomer: '+inv.cust+' Code:'+inv.code+' CNIC:'+inv.cnic+'\nItems: '+inv.items.map(x=>x.name+' Qty '+x.qty).join(', ')+'\nTotal: '+inv.total)}
+function editInv(i){let inv=invoices[i];document.getElementById('invNo').value=inv.no;document.getElementById('cName').value=inv.cust;document.getElementById('cCode').value=inv.code;document.getElementById('cnic').value=inv.cnic;items=inv.items;draw();alert('Edit mode - ab change kar ke Save dabayen, purani delete kar den')}
+function delInv(i){if(confirm('Delete karen?')){invoices.splice(i,1);localStorage.setItem('gmb_invoices',JSON.stringify(invoices));showInvoices()}}
+function showSummary(){document.getElementById('summaryCard').style.display='block';document.getElementById('summaryList').innerHTML=invoices.map(i=>`<div>${i.date} | Inv ${i.no} | Code ${i.code} | ${i.cust} | Products: ${i.items.map(x=>x.name+' ('+x.qty+')').join(', ')} | Sale Rs ${i.total}</div>`).join('')||'No Data'}
+function filterSummary(){let f=document.getElementById('fromD').value,t=document.getElementById('toD').value;let fl=invoices.filter(i=>i.date>=f&&i.date<=t);document.getElementById('summaryList').innerHTML=fl.map(i=>`<div>${i.date} | Inv ${i.no} | Code ${i.code} | ${i.cust} | Products: ${i.items.map(x=>x.name+' ('+x.qty+')').join(', ')} | Rs ${i.total}</div>`).join('')||'No Data'}
+function searchCust(){let q=document.getElementById('searchBox').value.trim();let r=customers.filter(c=>c.code==q||c.cnic==q);if(!r.length){document.getElementById('searchResult').innerHTML='Koi data nahi mila';return}document.getElementById('searchResult').innerHTML=r.map(c=>`<div>${c.date} - Code ${c.code} - CNIC ${c.cnic} - ${c.name} - ${c.addr} - Rs ${c.total}</div>`).join('');let first=r[0];document.getElementById('cCode').value=first.code;document.getElementById('cName').value=first.name;document.getElementById('cnic').value=first.cnic;document.getElementById('cAddr').value=first.addr}
 document.getElementById('invDate').value=new Date().toISOString().slice(0,10);renderProducts();draw();
-</script>
-</body>
-</html>
+</script></body></html>
