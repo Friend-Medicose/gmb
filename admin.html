@@ -7,16 +7,18 @@ input,select{padding:7px;border:1px solid #ccc;border-radius:6px;width:100%}.gri
 table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #333;padding:4px;text-align:center}th{background:#e8eefc}
 .modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:9999}.modal>div{background:#fff;width:95%;max-width:800px;max-height:90vh;overflow:auto;padding:10px}
 .logo-img{width:62px;height:62px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#00a0e3}
+/* DISPLAY PAR INVOICE HIDE - SIRF PRINT / VIEW ME NAZAR AAYEGA */
+#invoiceArea{display:none}
 @page{size:A4;margin:0}
 @media print{
 html,body{margin:0!important;padding:0!important;background:#fff}
 .no-print{display:none!important}
 .wrap{max-width:100%;padding:0;margin:0}
 .card{box-shadow:none;border:none;padding:0;margin:0}
-#invoiceArea{width:210mm;height:297mm;padding:3mm 12mm 12.7mm 12mm;position:relative;margin:0;background:#fff}
+#invoiceArea{display:block!important;width:210mm;height:297mm;padding:0mm 12mm 12.7mm 12mm;position:relative;margin:0;background:#fff}
 .invoice-header{position:static;text-align:center;margin:0;padding:0}
-.invoice-body{margin-top:3mm}
-.invoice-footer{position:absolute;bottom:12.7mm;left:12mm;right:12mm}
+.invoice-body{margin-top:2mm}
+.invoice-footer{position:absolute;bottom:12.7mm;left:12mm;right:12mm;font-size:10px!important;padding:6px!important;line-height:1.4!important}
 table{font-size:10px}th,td{padding:3px}
 }
 </style></head><body>
@@ -49,7 +51,7 @@ if(inp){inp.addEventListener('keypress',function(e){if(e.key==='Enter'){checkPas
 <div style="text-align:right;font-weight:700;font-size:12px">Total: <span id="tAmt">0</span> | Tax 0.5%: <span id="tTax">0</span> | Grand Total: <span id="gTotal">0</span></div>
 <p style="font-size:11px;margin:4px 0">Rupees: <b id="inWords"></b> Only | Total Items: <span id="tItems">0</span></p>
 </div>
-<div class="invoice-footer" style="border:1px solid #333;padding:8px;font-size:11px;line-height:1.5"><b>WARRANTY:</b> Under Section 23(1)(i) of Drugs Act, 1976. We do Hereby give this warranty that the drugs described in this invoice and sold by us do not contravene in any way with the provision of section 23 of the drug Act, 1976.<br><b>NOTE:</b><br>• Expired products shall not be accepted back unless written 4 Months in advance of the expiry date.<br>• Goods once sold will not be taken back or exchanged.<br><div style="text-align:right;margin-top:20px">______________________<br><b>Signature</b></div></div>
+<div class="invoice-footer" style="border:1px solid #333;padding:6px;font-size:10px;line-height:1.4"><b>WARRANTY:</b> Under Section 23(1)(i) of Drugs Act, 1976. We do Hereby give this warranty that the drugs described in this invoice and sold by us do not contravene in any way with the provision of section 23 of the drug Act, 1976.<br><b>NOTE:</b><br>• Expired products shall not be accepted back unless written 4 Months in advance of the expiry date.<br>• Goods once sold will not be taken back or exchanged.<br><div style="text-align:right;margin-top:10px">______________________<br><b>Signature</b></div></div>
 </div>
 
 <div class="card no-print"><h3 style="margin:2px 0">Customer Details Entry</h3><div class="grid"><div>Invoice No: <input id="invNo" value="001" oninput="syncPrint()"></div><div>Date: <input type="date" id="invDate" oninput="syncPrint()"></div><div>Customer Code: <input id="cCode" oninput="syncPrint()"></div><div>Customer Name: <input id="cName" oninput="syncPrint()"></div><div>Address: <input id="cAddr" oninput="syncPrint()"></div><div>CNIC: <input id="cnic" oninput="syncPrint()"></div></div>
