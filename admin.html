@@ -13,27 +13,38 @@ html,body{margin:0!important;padding:0!important;background:#fff}
 .no-print{display:none!important}
 .wrap{max-width:100%;padding:0;margin:0}
 .card{box-shadow:none;border:none;padding:0;margin:0}
-#invoiceArea{width:210mm;height:297mm;padding:25.4mm 12mm 25.4mm 12mm;position:relative;margin:0;background:#fff}
-.invoice-header{position:absolute;top:25.4mm;left:12mm;right:12mm}
-.invoice-footer{position:absolute;bottom:25.4mm;left:12mm;right:12mm}
+#invoiceArea{width:210mm;height:297mm;padding:12.7mm 12mm 12.7mm 12mm;position:relative;margin:0;background:#fff}
+.invoice-header{position:static;text-align:center;margin:0;padding:0}
+.invoice-body{margin-top:4mm}
+.invoice-footer{position:absolute;bottom:12.7mm;left:12mm;right:12mm}
 table{font-size:10px}th,td{padding:3px}
 }
 </style></head><body>
 <div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;align-items:center;justify-content:center;z-index:10000"><div style="background:#fff;padding:25px;border-radius:12px;text-align:center;width:90%;max-width:340px"><img class="logo-img" style="margin:auto" src="images/logo.png" onerror="this.onerror=null;this.src='logo.png'"><h2 style="color:#0b3d91;margin:6px 0">GMB PHARMA</h2><p>Admin Login</p><input type="password" id="passInput" placeholder="Enter Password" style="padding:12px;width:100%;border-radius:8px;border:1px solid #ccc;font-size:18px"><br><br><button onclick="checkPass()" style="background:#0b3d91;color:#fff;border:0;padding:12px;width:100%;border-radius:8px;font-weight:bold">OPEN ADMIN</button><p id="err" style="color:red"></p></div></div>
-<script>function checkPass(){let v=document.getElementById('passInput').value;if(v==="gmb8888"||v==="Gmb8888"){document.getElementById('lock').style.display='none';localStorage.setItem('gmb_login','ok')}else{document.getElementById('err').innerText="Wrong Password!"}}if(localStorage.getItem('gmb_login')==='ok'){document.addEventListener('DOMContentLoaded',()=>{document.getElementById('lock').style.display='none'})}</script>
+<script>
+function checkPass(){
+let v=document.getElementById('passInput').value.trim().toLowerCase();
+if(v==="gmb8888"){document.getElementById('lock').style.display='none';}
+else{document.getElementById('err').innerText="Wrong Password! Try: gmb8888";}
+}
+document.addEventListener('DOMContentLoaded',function(){
+let inp=document.getElementById('passInput');
+if(inp){inp.addEventListener('keypress',function(e){if(e.key==='Enter'){checkPass()}});inp.focus();}
+});
+</script>
 <div class="top no-print"><b style="font-size:20px">GMB PHARMA - ADMIN PANEL</b></div>
 <div class="wrap">
 <div class="card no-print"><h3 style="margin:2px 0">Customer Search - Code / CNIC</h3><div class="grid"><input id="searchBox" placeholder="Code or CNIC"><button class="btn" onclick="searchCust()">Search</button></div><div id="searchResult"></div></div>
 <div class="card no-print" style="border:2px solid #1a9c4a"><h3 style="margin:2px 0">Total Stock Entry</h3><div class="grid"><select id="stockSelect"></select><input id="stockQty" type="number" placeholder="Stock Qty"><input id="stockMRP" type="number" placeholder="MRP"><input id="stockTP" type="number" placeholder="TP"></div><div style="margin-top:6px"><button class="btn g" onclick="addStock()">+ Add Stock</button> <button class="btn" onclick="editStock()">Edit Stock</button> <button class="btn o" onclick="printStock()">Print Stock</button></div></div>
 
 <div class="card" id="invoiceArea">
-<div class="invoice-header" style="text-align:center;margin-top:0;padding-top:0">
+<div class="invoice-header">
 <div style="display:flex;justify-content:center;align-items:center;gap:12px"><img class="logo-img" src="images/logo.png" onerror="this.onerror=null;this.src='logo.png'"><div style="font-size:38px;font-weight:800;color:#0b3d91;line-height:1">GMB PHARMA</div></div>
 <div style="font-size:18px;font-weight:800;letter-spacing:2px;margin-top:4px;border:1px solid #0b3d91;display:inline-block;padding:3px 22px">SALE INVOICE</div>
 <p style="font-size:12px;margin:5px 0;line-height:1.4">Where good health begins<br>Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi<br>0345-0707464, 0300-3953178 | NTN: 8781968 | Lic: 0447</p>
 </div>
-<div style="margin-top:38mm">
-<div style="border:1px solid #333;padding:6px;font-size:11px;margin:6px 0"><div class="grid" style="grid-template-columns:1fr 1fr 1fr"><div>Invoice No: <b><span id="pInvNo">001</span></b></div><div>Date: <b><span id="pDate"></span></b></div><div>Customer Code: <b><span id="pCCode"></span></b></div><div>Customer Name: <b><span id="pCName"></span></b></div><div>Address: <b><span id="pCAddr"></span></b></div><div>CNIC: <b><span id="pCnic"></span></b></div></div></div>
+<div class="invoice-body">
+<div style="border:1px solid #333;padding:6px;font-size:11px;margin:0"><div class="grid" style="grid-template-columns:1fr 1fr 1fr"><div>Invoice No: <b><span id="pInvNo">001</span></b></div><div>Date: <b><span id="pDate"></span></b></div><div>Customer Code: <b><span id="pCCode"></span></b></div><div>Customer Name: <b><span id="pCName"></span></b></div><div>Address: <b><span id="pCAddr"></span></b></div><div>CNIC: <b><span id="pCnic"></span></b></div></div></div>
 <table><thead><tr><th>S.No</th><th>Description</th><th>M.R.P</th><th>TP</th><th>Qty</th><th>Bon</th><th>Batch</th><th>Amount</th><th>Dist Disc</th><th>GST</th><th>Net</th><th class="no-print">X</th></tr></thead><tbody id="rows"></tbody></table>
 <div style="text-align:right;font-weight:700;font-size:12px">Total: <span id="tAmt">0</span> | Tax 0.5%: <span id="tTax">0</span> | Grand Total: <span id="gTotal">0</span></div>
 <p style="font-size:11px;margin:4px 0">Rupees: <b id="inWords"></b> Only | Total Items: <span id="tItems">0</span></p>
@@ -54,7 +65,6 @@ table{font-size:10px}th,td{padding:3px}
 <div class="modal" id="viewModal"><div><h2 class="no-print" style="margin:0">INVOICE PREVIEW</h2><div id="viewContent"></div><div class="no-print"><button class="btn" onclick="window.print()">Print</button> <button class="btn r" onclick="document.getElementById('viewModal').style.display='none'">Close</button></div></div></div>
 <script>
 let products=JSON.parse(localStorage.getItem('gmb_products_v3')||'[{"name":"GM-APTI Syrup","code":"GM01","mrp":0,"tp":0,"total":0,"sold":0},{"name":"GM-Berry Syrup","code":"GM02","mrp":0,"tp":0,"total":0,"sold":0},{"name":"GM-CAL Syrup","code":"GM03","mrp":0,"tp":0,"total":0,"sold":0},{"name":"GM-CAL Tablet","code":"GM04","mrp":0,"tp":0,"total":0,"sold":0},{"name":"GM-CID Syrup","code":"GM05","mrp":0,"tp":0,"total":0,"sold":0},{"name":"GM-D Drops","code":"GM06","mrp":0,"tp":0,"total":0,"sold":0},{"name":"GM-LEAF Syrup","code":"GM07","mrp":0,"tp":0,"total":0,"sold":0},{"name":"GM-VIT Syrup 120ml","code":"GM08","mrp":0,"tp":0,"total":0,"sold":0},{"name":"GM-VIT Tablet 20","code":"GM09","mrp":0,"tp":0,"total":0,"sold":0},{"name":"Thy-D Plus","code":"GM10","mrp":0,"tp":0,"total":0,"sold":0}]');
-// Purana data hai to uska detail part bhi hata do
 products=products.map(p=>{let n=p.name.split(' - ')[0];return {...p,name:n}});
 let invoices=JSON.parse(localStorage.getItem('gmb_invoices')||'[]');let items=[];let customers=JSON.parse(localStorage.getItem('gmb_customers')||'[]');
 function syncPrint(){document.getElementById('pInvNo').innerText=document.getElementById('invNo').value;document.getElementById('pDate').innerText=document.getElementById('invDate').value;document.getElementById('pCCode').innerText=document.getElementById('cCode').value;document.getElementById('pCName').innerText=document.getElementById('cName').value;document.getElementById('pCAddr').innerText=document.getElementById('cAddr').value;document.getElementById('pCnic').innerText=document.getElementById('cnic').value}
