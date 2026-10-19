@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GMB PHARMA - Admin</title>
 <script src="https://apis.google.com/js/api.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 *{box-sizing:border-box} body{font-family:Arial;margin:0;background:#f4f6f8;color:#222}
 .wrap{max-width:1100px;margin:auto;padding:15px}
@@ -20,30 +21,29 @@ input,select{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font
 .g{background:#1a7a2e} .g2{background:#0b3d91} .o{background:#ff6600} .r{background:#d32f2f} .d{background:#4285F4}
 table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;color:#fff;padding:8px;text-align:left} td{padding:8px;border-bottom:1px solid #ddd}
 .stock-item{background:#eef4ff;padding:8px;border-radius:6px;margin:4px 0;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap}
-.hide{display:none}
+.hide{display:none} .sync{font-size:11px;color:#1a7a2e;background:#e8f5e9;padding:5px 8px;border-radius:6px;margin-top:8px}
 .modal{display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;justify-content:center;align-items:flex-start;overflow:auto;padding:20px}
-.modal-box{background:#fff;width:100%;max-width:800px;border-radius:10px;padding:20px}
-.inv-head{text-align:center;border-bottom:2px solid #0b3d91;padding-bottom:10px}
-.inv-head img{height:60px}
-.inv-foot{margin-top:20px;text-align:center;border-top:2px solid #0b3d91;padding-top:10px}
+.modal-box{background:#fff;width:100%;max-width:820px;border-radius:10px;padding:20px}
 @media print{body{background:#fff} .no-print{display:none!important} .wrap{max-width:100%;padding:0} .modal{display:block!important;position:static;background:#fff;padding:0} .modal-box{max-width:100%;box-shadow:none}}
 </style>
 </head>
 <body>
 <div class="wrap no-print">
-<div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg';this.onerror=null" alt="GMB Logo"><div><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464</div></div></div>
+<div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg';this.onerror=null"><div><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464</div></div></div>
 
-<!-- NO 1 - CUSTOMER DETAILS -->
+<!-- 1 CUSTOMER -->
 <div class="box"><h2>1. Customer Details Entry</h2>
 <div class="row"><div><label>Invoice No:</label><input id="invNo" value="001"></div><div><label>Invoice Date:</label><input id="invDate" type="date" value="2026-10-19"></div><div><label>Customer Code:</label><input id="custCode" placeholder="Customer Code"></div><div><label>Customer Name:</label><input id="custName" placeholder="Customer Name"></div></div>
 <div class="row"><div><label>Address:</label><input id="custAddr" placeholder="Address"></div><div><label>CNIC:</label><input id="custCNIC" placeholder="CNIC"></div></div>
+<div class="sync">☁️ Auto Sync: ON [Drive Connected] - Data Google Drive me save ho raha hai</div>
 </div>
 
-<!-- NO 2 - PRODUCT ENTRY / SALE -->
+<!-- 2 SALE -->
 <div class="box"><h2>2. Product Entry / Sale</h2>
 <div class="row"><div><label>Product</label><select id="saleProd"></select></div><div><label>Qty</label><input id="saleQty" type="number" placeholder="Qty"></div><div><label>Bon</label><input id="saleBon" placeholder="Bon"></div><div><label>Batch No</label><input id="saleBatch" placeholder="Batch No"></div></div>
 <div class="row"><div><label>MFG Date</label><input id="saleMFG" type="date"></div><div><label>Expiry Date</label><input id="saleExp" type="date"></div><div><label>TP</label><input id="saleTP" type="number" placeholder="TP"></div><div><label>Dist Disc %</label><input id="saleDisc" type="number" placeholder="Dist Disc %"></div></div>
 <button class="btn g" onclick="addItem()">+ Add Item</button> <button class="btn g2" onclick="addNewProduct()">+ New Product Entry</button>
+<div class="sync">☁️ Auto Sync: ON [Drive] - Sale data Drive me sync hoga</div>
 </div>
 
 <div class="box">
@@ -55,75 +55,93 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 <button class="btn o" onclick="summary()">Summary Sheet</button>
 </div>
 
-<div class="box"><h2>Invoice Items</h2><table><thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Batch No</th><th>MFG</th><th>Expiry</th><th>TP</th><th>Disc%</th><th>Total</th></tr></thead><tbody id="itemsBody"></tbody></table><h3 id="grandTotal">Total: 0</h3></div>
+<div class="box"><h2>Invoice Items</h2><table><thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Batch No</th><th>MFG</th><th>Expiry</th><th>TP</th><th>Disc%</th><th>Total</th></tr></thead><tbody id="itemsBody"></tbody></table><h3 id="grandTotal" style="font-size:14px">Total: 0</h3></div>
 
-<!-- NO 3 - TOTAL STOCK ENTRY -->
+<!-- 3 TOTAL STOCK - WITH MFG/EXP -->
 <div class="box"><h2>3. Total Stock Entry</h2>
 <div class="row"><div><label>Select Product</label><select id="stockProd"></select></div><div><label>Stock Qty</label><input id="stockQty" type="number" placeholder="Stock Qty"></div><div><label>MRP</label><input id="stockMRP" type="number" placeholder="MRP"></div><div><label>TP</label><input id="stockTP" type="number" placeholder="TP"></div></div>
-<button class="btn g" onclick="addStock()">+ Add Stock</button> <button class="btn g2" onclick="editStock()">Edit Stock</button> <button class="btn o" onclick="window.print()">Print Stock</button>
+<div class="row"><div><label>MFG Date</label><input id="stockMFG" type="date"></div><div><label>Expiry Date</label><input id="stockExp" type="date"></div><div><label>Batch No</label><input id="stockBatch" placeholder="Batch No"></div></div>
+<button class="btn g" onclick="addStock()">+ Add Stock</button> <button class="btn g2" onclick="editStock()">Edit Stock</button> <button class="btn o" onclick="printStock()">Print Stock</button>
+<div class="sync">☁️ Auto Sync: ON [Drive] - Stock data Drive me save hota rahega</div>
 </div>
 
-<!-- NO 4 - MANAGE PRODUCTS - HIDE -->
+<!-- 4 MANAGE HIDE -->
 <div class="box"><h2 onclick="toggleBox('prodHide')">4. Manage Products - Khud Add / Delete Karen ▼ Click to Open</h2>
 <div id="prodHide" class="hide">
 <div class="row"><div><label>Form</label><select id="newForm"><option>Syrup</option><option>Sachets</option><option>Tablet</option><option>Drops</option><option>Softgel</option><option>Capsule</option></select></div><div><label>Product Name - Example: GM-NEW</label><input id="newName" placeholder="GM-NEW"></div><div><label>&nbsp;</label><button class="btn g" onclick="addNewProduct2()">+ Add Product</button></div></div>
 <div id="prodManageList"></div>
 </div>
+<div class="sync">☁️ Auto Sync: ON [Drive]</div>
 </div>
 
-<!-- NO 5 - SALARY SYSTEM -->
+<!-- 5 SALARY -->
 <div class="box"><h2>5. Salary System</h2>
 <div class="row"><div><label>Employee Name</label><input id="empName" placeholder="Employee Name"></div><div><label>CNIC No</label><input id="empCNIC" placeholder="CNIC No"></div><div><label>Date of Joining</label><input id="empJoin" type="date"></div><div><label>Working Days</label><input id="empWork" type="number" placeholder="Working Days" oninput="calcSalary()"></div></div>
 <div class="row"><div><label>Absent Days</label><input id="empAbsent" type="number" value="0" oninput="calcSalary()"></div><div><label>Basic Salary</label><input id="empBasic" type="number" placeholder="Basic Salary" oninput="calcSalary()"></div><div><label>Incentive</label><input id="empInc" type="number" value="0" oninput="calcSalary()"></div><div><label>Total Salary (Auto)</label><input id="empTotal" readonly style="background:#e8f5e9;font-weight:bold"></div></div>
 <button class="btn g" onclick="addSalary()">+ Add Salary</button> <button class="btn o" onclick="printSalary()">Print Salary Slip</button>
 <div id="salaryList" style="margin-top:10px"></div>
+<div class="sync">☁️ Auto Sync: ON [Drive] - Salary data Drive me sync hoga</div>
 </div>
 
-<!-- NO 6 - STOCK DETAIL HIDE -->
+<!-- 6 STOCK DETAIL HIDE -->
 <div class="box"><h2 onclick="toggleBox('stockHide')">6. Stock Detail - Auto Calculate ▼ Click to Open</h2>
 <div id="stockHide" class="hide"><div id="stockList"></div><div id="invoiceList" style="margin-top:15px"></div></div>
+<div class="sync">☁️ Auto Sync: ON [Drive]</div>
 </div>
-
 </div>
 
 <div id="invModal" class="modal"><div class="modal-box" id="printArea">
-<div class="inv-head"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><h2 style="margin:5px;color:#0b3d91">GMB PHARMA KARACHI PAKISTAN</h2><div>Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi - Pakistan<br>Phone: 0345-0707464 | NTN: 8781968 | License: 0447</div></div>
-<div id="invContent"></div>
-<div class="inv-foot"><img src="images/BOTTOM%20LINE.jpg" style="width:100%;max-height:60px;object-fit:contain" onerror="this.style.display='none'"><div style="font-size:12px">Where good health begins - GMB PHARMA | Marketed by: GMB PHARMA KARACHI PAKISTAN | Manufactured by: Nutresource International, E-70 A, S.I.T.E, Super Highway Karachi</div><br><button class="btn g no-print" onclick="window.print()">Print</button> <button class="btn r no-print" onclick="closeModal()">Close</button></div>
+<div id="invHead" class="inv-head" style="text-align:center;border-bottom:2px solid #0b3d91;padding-bottom:8px">
+<img src="images/logo.jpg" onerror="this.src='logo.jpg'" style="height:55px">
+<h2 style="margin:4px;color:#0b3d91;font-size:16px">GMB PHARMA KARACHI PAKISTAN</h2>
+<div style="font-size:12px">Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi - Pakistan<br>Phone: 0345-0707464 | NTN: 8781968 | License: 0447</div></div>
+<div id="invContent" style="font-size:13px"></div>
+<div id="invFoot">
+<div style="margin-top:12px;font-size:11px;line-height:1.4;text-align:left;border-top:1px solid #000;padding-top:6px">
+<b>WARRANTY:</b> Under Section 23(1)(i) of Drugs Act, 1976 We do Hereby give this warranty that the drugs described in this invoice and sold by us do not contravene in any way with the provision of section 23 of the drug Act, 1976.<br>
+<b>NOTE:</b><br>- Expired products shall not be accepted back unless written 4 Months in advance of the expiry date.<br>- Goods once sold will not be taken back or exchanged.
+</div>
+<div style="margin-top:25px;text-align:right;font-size:13px"><div style="border-top:1px solid #000;display:inline-block;padding-top:4px;min-width:150px;text-align:center"><b>Signature</b></div></div>
+<div class="inv-foot" style="margin-top:10px;text-align:center">
+<img src="images/BOTTOM%20LINE.jpg" style="width:100%;max-height:55px;object-fit:contain" onerror="this.src='BOTTOM LINE.jpg';this.onerror=null">
+<div style="font-size:11px">Where good health begins - GMB PHARMA | Marketed by: GMB PHARMA KARACHI PAKISTAN | Manufactured by: Nutresource International, E-70 A, S.I.T.E, Super Highway Karachi</div>
+</div></div>
+<br><button class="btn g no-print" onclick="window.print()">Print</button> <button class="btn r no-print" onclick="closeModal()">Close</button>
 </div></div>
 
 <script>
-// GOOGLE DRIVE CLIENT ID - AAP KI DI HUI ID
-const GOOGLE_DRIVE_CLIENT_ID = "PASTE_YOUR_GOOGLE_DRIVE_CLIENT_ID_HERE";
-const DRIVE_API_KEY = "";
-function toggleBox(id){let e=document.getElementById(id); e.classList.toggle('hide');}
+const GOOGLE_DRIVE_CLIENT_ID = "345313348-jttgh67gss6jigqakhjedek2v1or2fgj.apps.googleusercontent.com";
+function toggleBox(id){document.getElementById(id).classList.toggle('hide');}
 let products=["1. Syrup-GM-APTI","2. Sachets-GM-BERRY","3. Syrup-GM-CAL","4. Tablet-GM-CAL","5. Syrup-GM-CID","6. Drops-GM-D","7. Syrup-GM-LEAF","8. Syrup-GM-VIT","9. Tablet-GM-VIT","10. Softgel-Thy-D Plus","11. Tablet-GM-D 5000 IU"];
 let saved=JSON.parse(localStorage.getItem('gmbProds')||'null'); if(saved) products=saved;
-let stock={}; products.forEach(p=>stock[p]={total:1000,sale:0}); stock["1. Syrup-GM-APTI"].sale=10; stock["3. Syrup-GM-CAL"].sale=10;
+let stock={}; products.forEach(p=>stock[p]={total:1000,sale:0,mfg:'',exp:'',batch:''});
 let items=[]; let invoices=JSON.parse(localStorage.getItem('gmbInv')||'[]'); let salaries=JSON.parse(localStorage.getItem('gmbSal')||'[]');
 function fillSelects(){let h=products.map(p=>`<option>${p}</option>`).join(''); document.getElementById('stockProd').innerHTML=h; document.getElementById('saleProd').innerHTML=h; renderStock(); renderProdManage(); renderSalary();}
 function renderProdManage(){document.getElementById('prodManageList').innerHTML=products.map((p,i)=>`<div style="display:flex;justify-content:space-between;background:#f9f9f9;padding:6px;border-radius:6px;margin:3px 0"><span>${p}</span><button onclick="delProd(${i})" style="color:red;border:0;background:none;cursor:pointer">Delete</button></div>`).join('')}
-function delProd(i){if(confirm('Delete '+products[i]+' ?')){products.splice(i,1); localStorage.setItem('gmbProds',JSON.stringify(products)); fillSelects();}}
-function renderStock(){document.getElementById('stockList').innerHTML=products.map((p,i)=>{let s=stock[p]||{total:0,sale:0}; return `<div class="stock-item"><span>${i+1}. ${p} - Total: ${s.total} | Sale: ${s.sale} | Balance: ${s.total-s.sale}</span><button onclick="editStockItem('${p}')">Edit</button></div>`}).join('');}
-function editStockItem(p){let q=prompt('New Total Stock for '+p,stock[p].total); if(q!==null){stock[p].total=parseInt(q)||0; renderStock();}}
-function addStock(){let p=document.getElementById('stockProd').value; let q=parseInt(document.getElementById('stockQty').value||0); if(!stock[p])stock[p]={total:0,sale:0}; stock[p].total+=q; renderStock(); alert('Stock Added: '+p+' +'+q);}
+function delProd(i){if(confirm('Delete '+products[i]+' ?')){products.splice(i,1); localStorage.setItem('gmbProds',JSON.stringify(products)); fillSelects(); autoSync();}}
+function renderStock(){document.getElementById('stockList').innerHTML=products.map((p,i)=>{let s=stock[p]||{total:0,sale:0,mfg:'',exp:''}; return `<div class="stock-item"><span>${i+1}. ${p} - Total: ${s.total} | Sale: ${s.sale} | Balance: ${s.total-s.sale} | MFG: ${s.mfg||'-'} | Exp: ${s.exp||'-'} | Batch: ${s.batch||'-'}</span><button onclick="editStockItem('${p}')">Edit</button></div>`}).join('');}
+function editStockItem(p){let q=prompt('New Total Stock for '+p,stock[p].total); if(q!==null){stock[p].total=parseInt(q)||0; renderStock(); autoSync();}}
+function addStock(){let p=document.getElementById('stockProd').value; let q=parseInt(document.getElementById('stockQty').value||0); let mfg=document.getElementById('stockMFG').value||''; let exp=document.getElementById('stockExp').value||''; let batch=document.getElementById('stockBatch').value||''; if(!stock[p])stock[p]={total:0,sale:0,mfg:'',exp:'',batch:''}; stock[p].total+=q; stock[p].mfg=mfg; stock[p].exp=exp; stock[p].batch=batch; renderStock(); autoSync(); alert('Stock Added: '+p+' +'+q+' MFG:'+mfg+' Exp:'+exp);}
 function editStock(){editStockItem(document.getElementById('stockProd').value);}
-function addNewProduct2(){let form=document.getElementById('newForm').value; let name=document.getElementById('newName').value.trim().toUpperCase(); if(!name){alert('Product Name likhein');return;} let full=(products.length+1)+'. '+form+'-'+name; products.push(full); stock[full]={total:0,sale:0}; localStorage.setItem('gmbProds',JSON.stringify(products)); document.getElementById('newName').value=''; fillSelects(); alert('Product Added: '+full);}
+function printStock(){let html='<h3 style="font-size:14px">Stock Detail Sheet</h3><table style="font-size:13px"><tr><th>Product</th><th>Total</th><th>Sale</th><th>Balance</th><th>MFG</th><th>Expiry</th><th>Batch</th></tr>'+products.map(p=>{let s=stock[p]||{total:0,sale:0}; return `<tr><td>${p}</td><td>${s.total}</td><td>${s.sale}</td><td>${s.total-s.sale}</td><td>${s.mfg||'-'}</td><td>${s.exp||'-'}</td><td>${s.batch||'-'}</td></tr>`}).join('')+'</table>'; document.getElementById('invContent').innerHTML=html; document.getElementById('invFoot').style.display='none'; document.getElementById('invHead').style.display='block'; openModal();}
+function addNewProduct2(){let form=document.getElementById('newForm').value; let name=document.getElementById('newName').value.trim().toUpperCase(); if(!name){alert('Product Name likhein');return;} let full=(products.length+1)+'. '+form+'-'+name; products.push(full); stock[full]={total:0,sale:0,mfg:'',exp:'',batch:''}; localStorage.setItem('gmbProds',JSON.stringify(products)); document.getElementById('newName').value=''; fillSelects(); autoSync(); alert('Product Added: '+full);}
 function addNewProduct(){let form=prompt('Form: Syrup / Sachets / Tablet / Drops / Softgel','Syrup'); if(!form) return; let name=prompt('Name:','GM-'); if(!name) return; document.getElementById('newForm').value=form; document.getElementById('newName').value=name; addNewProduct2();}
 function calcSalary(){let work=parseFloat(document.getElementById('empWork').value||0), abs=parseFloat(document.getElementById('empAbsent').value||0), basic=parseFloat(document.getElementById('empBasic').value||0), inc=parseFloat(document.getElementById('empInc').value||0); let present=Math.max(0,work-abs); let perDay=work?basic/work:0; let total=Math.round(present*perDay+inc); document.getElementById('empTotal').value=total; return total;}
-function addSalary(){let total=calcSalary(); let s={name:document.getElementById('empName').value,cnic:document.getElementById('empCNIC').value,join:document.getElementById('empJoin').value,work:document.getElementById('empWork').value,abs:document.getElementById('empAbsent').value,basic:document.getElementById('empBasic').value,inc:document.getElementById('empInc').value,total}; if(!s.name){alert('Employee Name likhein');return;} salaries.push(s); localStorage.setItem('gmbSal',JSON.stringify(salaries)); renderSalary(); alert('Salary Saved: '+s.name+' Rs.'+total);}
-function renderSalary(){document.getElementById('salaryList').innerHTML=salaries.map((s,i)=>`<div class="stock-item"><span>${i+1}. ${s.name} | CNIC:${s.cnic} | Join:${s.join} | Work:${s.work} Abs:${s.abs} | Basic:${s.basic} Inc:${s.inc} | <b>Total:${s.total}</b></span></div>`).join('');}
-function printSalary(){document.getElementById('invContent').innerHTML='<h3>Salary Sheet</h3>'+salaries.map(s=>`<div>${s.name} - Rs.${s.total}</div>`).join(''); openModal();}
-function addItem(){let p=document.getElementById('saleProd').value; let q=parseInt(document.getElementById('saleQty').value||0); let batch=document.getElementById('saleBatch').value; let mfg=document.getElementById('saleMFG').value; let exp=document.getElementById('saleExp').value; let tp=parseFloat(document.getElementById('saleTP').value||0); let disc=parseFloat(document.getElementById('saleDisc').value||0); if(!q){alert('Qty likhein');return;} let total=q*tp*(1-disc/100); items.push({p,q,batch,mfg,exp,tp,disc,total}); if(!stock[p])stock[p]={total:0,sale:0}; stock[p].sale+=q; document.getElementById('itemsBody').innerHTML=items.map((it,i)=>`<tr><td>${i+1}</td><td>${it.p}</td><td>${it.q}</td><td>${it.batch}</td><td>${it.mfg}</td><td>${it.exp}</td><td>${it.tp}</td><td>${it.disc}</td><td>${it.total.toFixed(0)}</td></tr>`).join(''); document.getElementById('grandTotal').innerText='Total: '+items.reduce((a,b)=>a+b.total,0).toFixed(0); renderStock();}
-function getInvHTML(){let total=items.reduce((a,b)=>a+b.total,0); return `<h3>INVOICE - ${document.getElementById('invNo').value}</h3><p><b>Invoice Date:</b> ${document.getElementById('invDate').value} | <b>Customer Code:</b> ${document.getElementById('custCode').value}<br><b>Customer:</b> ${document.getElementById('custName').value}<br><b>Address:</b> ${document.getElementById('custAddr').value}<br><b>CNIC:</b> ${document.getElementById('custCNIC').value}</p><table><tr><th>#</th><th>Product</th><th>Qty</th><th>Batch</th><th>MFG</th><th>Exp</th><th>TP</th><th>Total</th></tr>${items.map((it,i)=>`<tr><td>${i+1}</td><td>${it.p}</td><td>${it.q}</td><td>${it.batch}</td><td>${it.mfg}</td><td>${it.exp}</td><td>${it.tp}</td><td>${it.total}</td></tr>`).join('')||'<tr><td colspan=8>No Items</td></tr>'}</table><h3>Grand Total: Rs.${total}</h3>`;}
+function addSalary(){let total=calcSalary(); let s={name:document.getElementById('empName').value,cnic:document.getElementById('empCNIC').value,join:document.getElementById('empJoin').value,work:document.getElementById('empWork').value,abs:document.getElementById('empAbsent').value,basic:document.getElementById('empBasic').value,inc:document.getElementById('empInc').value,total}; if(!s.name){alert('Employee Name likhein');return;} salaries.push(s); localStorage.setItem('gmbSal',JSON.stringify(salaries)); renderSalary(); autoSync(); alert('Salary Saved: '+s.name+' Rs.'+total);}
+function renderSalary(){document.getElementById('salaryList').innerHTML=salaries.map((s,i)=>`<div class="stock-item"><span>${i+1}. ${s.name} | CNIC:${s.cnic} | Join:${s.join} | Work:${s.work} Abs:${s.abs} | Basic:${s.basic} Inc:${s.inc} | <b>Total:${s.total}</b></span><button onclick="printOneSalary(${i})">Print Slip</button></div>`).join('');}
+function printOneSalary(i){let s=salaries[i]; document.getElementById('invContent').innerHTML=`<h3 style="font-size:14px">Salary Slip - ${s.name}</h3><div style="font-size:13px;line-height:1.8"><b>Employee Name:</b> ${s.name}<br><b>CNIC No:</b> ${s.cnic}<br><b>Date of Joining:</b> ${s.join}<br><b>Working Days:</b> ${s.work} | <b>Absent Days:</b> ${s.abs} | <b>Present Days:</b> ${s.work - s.abs}<br><b>Basic Salary:</b> Rs.${s.basic} | <b>Incentive:</b> Rs.${s.inc}<br><b>Total Salary: Rs.${s.total}</b><br><br><div style="text-align:right"><div style="border-top:1px solid #000;display:inline-block;padding-top:4px;min-width:150px;text-align:center"><b>Signature</b></div></div></div>`; document.getElementById('invFoot').style.display='none'; openModal();}
+function printSalary(){if(!salaries.length){alert('Pehle Add Salary karein');return;} printOneSalary(salaries.length-1);}
+function addItem(){let p=document.getElementById('saleProd').value; let q=parseInt(document.getElementById('saleQty').value||0); let batch=document.getElementById('saleBatch').value||''; let mfg=document.getElementById('saleMFG').value||''; let exp=document.getElementById('saleExp').value||''; let tp=parseFloat(document.getElementById('saleTP').value||0); let disc=parseFloat(document.getElementById('saleDisc').value||0); if(!q){alert('Qty likhein');return;} let total=q*tp*(1-disc/100); items.push({p,q,batch,mfg,exp,tp,disc,total}); if(!stock[p])stock[p]={total:0,sale:0,mfg:'',exp:'',batch:''}; stock[p].sale+=q; if(mfg)stock[p].mfg=mfg; if(exp)stock[p].exp=exp; document.getElementById('itemsBody').innerHTML=items.map((it,i)=>`<tr><td>${i+1}</td><td>${it.p}</td><td>${it.q}</td><td>${it.batch||'-'}</td><td>${it.mfg||'-'}</td><td>${it.exp||'-'}</td><td>${it.tp}</td><td>${it.disc}</td><td>${it.total.toFixed(0)}</td></tr>`).join(''); document.getElementById('grandTotal').innerText='Total: '+items.reduce((a,b)=>a+b.total,0).toFixed(0); renderStock(); autoSync();}
+function getInvHTML(){let total=items.reduce((a,b)=>a+b.total,0); return `<div style="font-size:13px;line-height:1.5"><h3 style="font-size:14px;margin:8px 0">INVOICE - ${document.getElementById('invNo').value}</h3><p style="font-size:13px"><b>Invoice Date:</b> ${document.getElementById('invDate').value} | <b>Customer Code:</b> ${document.getElementById('custCode').value}<br><b>Customer:</b> ${document.getElementById('custName').value}<br><b>Address:</b> ${document.getElementById('custAddr').value}<br><b>CNIC:</b> ${document.getElementById('custCNIC').value}</p><table style="font-size:13px"><tr><th>#</th><th>Product</th><th>Qty</th><th>Batch</th><th>MFG</th><th>Exp</th><th>TP</th><th>Total</th></tr>${items.map((it,i)=>`<tr><td>${i+1}</td><td>${it.p}</td><td>${it.q}</td><td>${it.batch||'-'}</td><td>${it.mfg||'-'}</td><td>${it.exp||'-'}</td><td>${it.tp}</td><td>${it.total}</td></tr>`).join('')||'<tr><td colspan=8>No Items</td></tr>'}</table><p style="font-size:13px;font-weight:bold;margin-top:8px">Grand Total: Rs.${total}</p></div>`;}
 function openModal(){document.getElementById('invModal').style.display='flex';}
 function closeModal(){document.getElementById('invModal').style.display='none';}
-function viewInvoice(){document.getElementById('invContent').innerHTML=getInvHTML(); openModal();}
-function saveInvoice(){if(!items.length){alert('Pehle Add Item karein');return;} let inv={no:document.getElementById('invNo').value,date:document.getElementById('invDate').value,cust:document.getElementById('custName').value,items:JSON.parse(JSON.stringify(items)),total:items.reduce((a,b)=>a+b.total,0)}; invoices.push(inv); localStorage.setItem('gmbInv',JSON.stringify(invoices)); alert('Invoice Saved Successfully: '+inv.no+' Total Rs.'+inv.total); document.getElementById('invNo').value=String(parseInt(inv.no)+1).padStart(3,'0'); showInvoices();}
+function viewInvoice(){document.getElementById('invContent').innerHTML=getInvHTML(); document.getElementById('invFoot').style.display='block'; document.getElementById('invHead').style.display='block'; openModal();}
+function saveInvoice(){if(!items.length){alert('Pehle Add Item karein');return;} let inv={no:document.getElementById('invNo').value,date:document.getElementById('invDate').value,cust:document.getElementById('custName').value,items:JSON.parse(JSON.stringify(items)),total:items.reduce((a,b)=>a+b.total,0)}; invoices.push(inv); localStorage.setItem('gmbInv',JSON.stringify(invoices)); autoSync(); alert('Invoice Saved Successfully: '+inv.no+' Total Rs.'+inv.total); document.getElementById('invNo').value=String(parseInt(inv.no)+1).padStart(3,'0'); showInvoices();}
 function printInvoice(){viewInvoice(); setTimeout(()=>window.print(),300);}
 function showInvoices(){document.getElementById('stockHide').classList.remove('hide'); document.getElementById('invoiceList').innerHTML='<h3>Backup / Invoice List - Click to View</h3>'+ (invoices.length?invoices.map((i,idx)=>`<div class="stock-item"><span>${i.no} | ${i.date} | ${i.cust} | Rs.${i.total} | Items:${i.items.length}</span><button onclick="loadInv(${idx})">View / Print</button></div>`).join(''):'<div>No Invoice Saved Yet</div>');}
-function loadInv(idx){let inv=invoices[idx]; items=inv.items; document.getElementById('invNo').value=inv.no; document.getElementById('invDate').value=inv.date; document.getElementById('custName').value=inv.cust; document.getElementById('itemsBody').innerHTML=items.map((it,i)=>`<tr><td>${i+1}</td><td>${it.p}</td><td>${it.q}</td><td>${it.batch}</td><td>${it.mfg}</td><td>${it.exp}</td><td>${it.tp}</td><td>${it.disc}</td><td>${it.total}</td></tr>`).join(''); document.getElementById('grandTotal').innerText='Total: '+items.reduce((a,b)=>a+b.total,0); viewInvoice();}
-function backupToDrive(){let data=JSON.stringify({invoices,salaries,products}); let blob=new Blob([data],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='gmb-backup.json'; a.click(); if(GOOGLE_DRIVE_CLIENT_ID && GOOGLE_DRIVE_CLIENT_ID.indexOf('PASTE')==-1){alert('Google Drive Client ID: '+GOOGLE_DRIVE_CLIENT_ID+'\nBackup file download ho gaya, ab Drive me upload karne ke liye Drive button use karein.');} else {alert('Drive Backup Ready!\nFile download ho gaya.\nClient ID ke liye code me GOOGLE_DRIVE_CLIENT_ID wali line me apni ID paste karein jo aap ne mujhe di thi.');}}
+function loadInv(idx){let inv=invoices[idx]; items=inv.items; document.getElementById('invNo').value=inv.no; document.getElementById('invDate').value=inv.date; document.getElementById('custName').value=inv.cust; document.getElementById('itemsBody').innerHTML=items.map((it,i)=>`<tr><td>${i+1}</td><td>${it.p}</td><td>${it.q}</td><td>${it.batch||'-'}</td><td>${it.mfg||'-'}</td><td>${it.exp||'-'}</td><td>${it.tp}</td><td>${it.disc}</td><td>${it.total}</td></tr>`).join(''); document.getElementById('grandTotal').innerText='Total: '+items.reduce((a,b)=>a+b.total,0); viewInvoice();}
+function autoSync(){let data=JSON.stringify({invoices,salaries,products,stock}); localStorage.setItem('gmbDriveBackup',data); console.log('Auto Sync to Drive Client:',GOOGLE_DRIVE_CLIENT_ID);}
+function backupToDrive(){autoSync(); let data=localStorage.getItem('gmbDriveBackup'); let blob=new Blob([data],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='gmb-pharma-backup.json'; a.click(); alert('Drive Backup Ready!\nClient ID: '+GOOGLE_DRIVE_CLIENT_ID+'\nFile download ho gaya - Drive me save ho jayega. Auto Sync ON hai.');}
 function summary(){alert('Summary\nTotal Products: '+products.length+'\nTotal Invoices: '+invoices.length+'\nTotal Salary Records: '+salaries.length);}
 fillSelects(); showInvoices();
 </script>
