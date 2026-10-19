@@ -18,7 +18,6 @@ input,select{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font
 table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;color:#fff;padding:8px;text-align:left;border-right:1px solid #fff} td{padding:8px;border-bottom:1px solid #ddd;border-right:1px solid #ddd}
 .stock-item{background:#eef4ff;padding:8px;border-radius:6px;margin:4px 0;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center}
 .hide{display:none} .sync{display:none}
-/* PRINT HEADER - LOGO 55px FIX, TEXT CENTRE */
 .print-header{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding-bottom:6px;border-bottom:2px solid #0b3d91;text-align:center}
 .print-header img{height:55px;width:55px;object-fit:contain;flex-shrink:0}
 .print-header h2{font-size:16px;color:#0b3d91;margin:0;text-align:center}
@@ -36,10 +35,10 @@ body{background:#fff;margin:0} .no-print{display:none!important} .wrap{max-width
 </style>
 </head>
 <body>
-<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password"><br><br><button class="btn g" onclick="checkPwd()" style="width:100%">Login</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p></div></div>
+<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password"><br><br><button class="btn g" onclick="checkPwd()" style="width:100%">Login</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p><p style="font-size:11px;color:#666" id="netStatus">Status: Online</p></div></div>
 
 <div class="wrap no-print" id="mainApp" style="display:none">
-<div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464</div></div></div>
+<div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464 | <span id="netStatus2">Online</span></div></div></div>
 
 <div class="box"><h2>1. Customer Details</h2>
 <div class="row"><div><label>Invoice No:</label><input id="invNo" value="001"></div><div><label>Invoice Date:</label><input id="invDate" type="date" value="2026-10-20"></div><div><label>Customer ID:</label><input id="custCode" placeholder="Customer ID"></div><div><label>Customer Name:</label><input id="custName" placeholder="Customer Name"></div></div>
@@ -91,10 +90,8 @@ body{background:#fff;margin:0} .no-print{display:none!important} .wrap{max-width
 </div></div>
 
 <script>
-const CLIENT_ID='YOUR_CLIENT_ID.apps.googleusercontent.com'; // <-- yahan apni wali Client ID paste karein
+const CLIENT_ID='YOUR_CLIENT_ID.apps.googleusercontent.com';
 function checkPwd(){if(document.getElementById('pwd').value==='gmb777'){document.getElementById('lock').style.display='none';document.getElementById('mainApp').style.display='block';}else{document.getElementById('pwdErr').style.display='block';}}
-// SECURITY - Edit/Delete ke liye gmb888
-let pendingFn=null;
 function secure(fnName,arg){let p=prompt('Edit/Delete ke liye Security Password lagayen:'); if(p!=='gmb888'){alert('Wrong Password! Edit/Delete nahi hoga.'); return;} if(arg!==undefined){window[fnName](arg);} else {window[fnName]();}}
 function toggleBox(id){document.getElementById(id).classList.toggle('hide');}
 let products=["1. Syrup-GM-APTI","2. Sachets-GM-BERRY","3. Syrup-GM-CAL","4. Tablet-GM-CAL","5. Syrup-GM-CID","6. Drops-GM-D","7. Syrup-GM-LEAF","8. Syrup-GM-VIT","9. Tablet-GM-VIT","10. Softgel-Thy-D Plus","11. Tablet-GM-D 5000 IU"];
@@ -105,7 +102,8 @@ function fillSelects(){let h=products.map(p=>`<option>${p}</option>`).join(''); 
 function renderProdManage(){document.getElementById('prodManageList').innerHTML=products.map((p,i)=>`<div style="display:flex;justify-content:space-between;background:#f9f9f9;padding:6px;border-radius:6px;margin:3px 0"><span>${p}</span><span><button class="btn eb" onclick="secure('editProd',${i})">Edit</button><button class="btn r" onclick="secure('delProd',${i})">Delete</button></span></div>`).join('')}
 function editProd(i){let n=prompt('Edit Product',products[i]); if(n){products[i]=n; localStorage.setItem('gmbProds',JSON.stringify(products)); fillSelects(); autoSync();}}
 function delProd(i){if(confirm('Delete '+products[i]+' ?')){products.splice(i,1); localStorage.setItem('gmbProds',JSON.stringify(products)); fillSelects(); autoSync();}}
-function renderStock(){document.getElementById('stockList').innerHTML=products.map((p,i)=>{let s=stock[p]||{total:0,sale:0,mfg:'',exp:''}; return `<div class="stock-item"><span>${i+1}. ${p} - Total: ${s.total} | Sale: ${s.sale} | Balance: ${s.total-s.sale} | MFG: ${s.mfg||'-'} | Exp: ${s.exp||'-'} | Batch: ${s.batch||'-'}</span><span><button class="btn eb" onclick="secure('editStockItem',\''+p+'\')">Edit</button><button class="btn r" onclick="secure('delStockItem',\''+p+'\')">Delete</button></span></div>`}).join('');}
+// STOCK DETAIL - SIRF VIEW, EDIT/DELETE KHATAM
+function renderStock(){document.getElementById('stockList').innerHTML=products.map((p,i)=>{let s=stock[p]||{total:0,sale:0,mfg:'',exp:''}; return `<div class="stock-item"><span>${i+1}. ${p} - Total: ${s.total} | Sale: ${s.sale} | Balance: ${s.total-s.sale} | MFG: ${s.mfg||'-'} | Exp: ${s.exp||'-'} | Batch: ${s.batch||'-'}</span></div>`}).join('');}
 function editStockItem(p){let q=prompt('New Total Stock for '+p,stock[p].total); if(q!==null){stock[p].total=parseInt(q)||0; renderStock(); autoSync();}}
 function delStockItem(p){if(confirm('Delete Stock '+p+' ?')){stock[p].total=0; stock[p].sale=0; renderStock(); autoSync();}}
 function addStock(){let p=document.getElementById('stockProd').value; let q=parseInt(document.getElementById('stockQty').value||0); let mfg=document.getElementById('stockMFG').value||''; let exp=document.getElementById('stockExp').value||''; let batch=document.getElementById('stockBatch').value||''; if(!stock[p])stock[p]={total:0,sale:0,mfg:'',exp:'',batch:''}; stock[p].total+=q; stock[p].mfg=mfg; stock[p].exp=exp; stock[p].batch=batch; renderStock(); autoSync(); alert('Stock Added: '+p+' +'+q);}
@@ -136,17 +134,21 @@ function closeModal(){document.getElementById('invModal').style.display='none';}
 function viewInvoice(){document.getElementById('invContent').innerHTML=getInvHTML(); document.getElementById('invFoot').style.display='block'; openModal();}
 function saveInvoice(){if(!items.length){alert('Add Item First');return;} let inv={no:document.getElementById('invNo').value,date:document.getElementById('invDate').value,cust:document.getElementById('custName').value,items:JSON.parse(JSON.stringify(items)),total:items.reduce((a,b)=>a+b.total,0)}; invoices.push(inv); localStorage.setItem('gmbInv',JSON.stringify(invoices)); autoSync(); alert('Invoice Saved: '+inv.no+' Total Rs.'+inv.total); document.getElementById('invNo').value=String(parseInt(inv.no)+1).padStart(3,'0'); showInvoices();}
 function printInvoice(){viewInvoice(); setTimeout(()=>window.print(),300);}
-function showInvoices(){document.getElementById('stockHide').classList.remove('hide'); document.getElementById('invoiceList').innerHTML='<h3>Backup / Invoice List</h3>'+ (invoices.length?invoices.map((i,idx)=>`<div class="stock-item"><span>${i.no} | ${i.date} | ${i.cust} | Rs.${i.total} | Items:${i.items.length}</span><span><button class="btn o" onclick="loadInv(${idx})">View</button><button class="btn eb" onclick="secure('loadInv',${idx})">Edit</button><button class="btn r" onclick="secure('delInv',${idx})">Delete</button></span></div>`).join(''):'<div>No Invoice Saved Yet</div>');}
+function showInvoices(){document.getElementById('invoiceList').innerHTML='<h3>Backup / Invoice List</h3>'+ (invoices.length?invoices.map((i,idx)=>`<div class="stock-item"><span>${i.no} | ${i.date} | ${i.cust} | Rs.${i.total} | Items:${i.items.length}</span><span><button class="btn o" onclick="loadInv(${idx})">View</button><button class="btn eb" onclick="secure('loadInv',${idx})">Edit</button><button class="btn r" onclick="secure('delInv',${idx})">Delete</button></span></div>`).join(''):'<div>No Invoice Saved Yet</div>');}
 function delInv(idx){if(confirm('Delete Invoice?')){invoices.splice(idx,1); localStorage.setItem('gmbInv',JSON.stringify(invoices)); showInvoices(); autoSync();}}
 function loadInv(idx){let inv=invoices[idx]; items=inv.items; document.getElementById('invNo').value=inv.no; document.getElementById('invDate').value=inv.date; document.getElementById('custName').value=inv.cust; renderItems(); viewInvoice();}
-function autoSync(){let data=JSON.stringify({invoices,salaries,products,stock}); localStorage.setItem('gmbDriveBackup',data); console.log('Auto Sync Hidden Working');}
-// BACKUP - DOWNLOAD KHATAM, DRIVE ME SYNC
-function backupToDrive(){autoSync(); alert('Auto Sync Started... Google Drive se connect ho raha hai');
- if(typeof gapi!=='undefined'){gapi.load('client:auth2',()=>{gapi.auth2.init({client_id:CLIENT_ID}).then(()=>{let auth=gapi.auth2.getAuthInstance(); if(!auth.isSignedIn.get()){auth.signIn().then(()=>uploadToDrive());} else uploadToDrive();});});} else {alert('Drive Sync Ready - Data local backup me save ho gaya. Client ID wali Drive se link ho jayega.');}}
-function uploadToDrive(){let data=localStorage.getItem('gmbDriveBackup'); let token=gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token; fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',{method:'POST',headers:{Authorization:'Bearer '+token},body:createDriveBody(data)}).then(r=>r.json()).then(j=>{alert('Saved to Google Drive! ID: '+(j.id||'OK'));}).catch(e=>{alert('Drive Sync Done - Local backup saved');});}
+function autoSync(){let data=JSON.stringify({invoices,salaries,products,stock,time:new Date().toISOString()}); localStorage.setItem('gmbDriveBackup',data); localStorage.setItem('gmbPendingSync','1'); if(navigator.onLine){syncToDrive();}}
+function backupToDrive(){autoSync(); if(!navigator.onLine){alert('Offline hai - Data phone me save ho gaya. Internet aate hi Drive me auto save ho jayega.'); return;} alert('Auto Sync Started... Google Drive se connect ho raha hai'); syncToDrive(true);}
+function syncToDrive(force){if(!navigator.onLine) return; if(typeof gapi==='undefined') return; try{gapi.load('client:auth2',()=>{gapi.auth2.init({client_id:CLIENT_ID}).then(()=>{let auth=gapi.auth2.getAuthInstance(); if(!auth.isSignedIn.get()){ if(force) auth.signIn().then(()=>uploadToDrive()); } else uploadToDrive();});});}catch(e){}}
+function uploadToDrive(){let data=localStorage.getItem('gmbDriveBackup'); if(!data) return; let token=gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token; fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',{method:'POST',headers:{Authorization:'Bearer '+token},body:createDriveBody(data)}).then(r=>r.json()).then(j=>{localStorage.setItem('gmbPendingSync','0'); console.log('Saved to Drive',j.id);}).catch(e=>{console.log('Drive pending');});}
 function createDriveBody(data){let boundary='gmb'; let meta=JSON.stringify({name:'gmb-pharma-backup.json',mimeType:'application/json'}); let body='--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+meta+'\r\n--'+boundary+'\r\nContent-Type: application/json\r\n\r\n'+data+'\r\n--'+boundary+'--'; return new Blob([body],{type:'multipart/related; boundary='+boundary});}
-function summary(){alert('Summary\nTotal Products: '+products.length+'\nTotal Invoices: '+invoices.length+'\nTotal Salary Records: '+salaries.length);}
-fillSelects(); showInvoices();
+function updateNet(){let s=navigator.onLine?'Online':'Offline - Data phone me save ho raha hai'; document.getElementById('netStatus').innerText='Status: '+s; let el=document.getElementById('netStatus2'); if(el) el.innerText=s;}
+window.addEventListener('online',()=>{updateNet(); autoSync(); alert('Internet Connected - Auto Sync ho raha hai, data Google Drive par save ho raha hai');});
+window.addEventListener('offline',()=>{updateNet();});
+function summary(){alert('Summary\nTotal Products: '+products.length+'\nTotal Invoices: '+invoices.length+'\nTotal Salary Records: '+salaries.length+'\nNet: '+(navigator.onLine?'Online':'Offline'));}
+fillSelects(); showInvoices(); updateNet();
+// Stock Detail box ko OFF hi rakhen - khud open na ho
+document.getElementById('stockHide').classList.add('hide');
 </script>
 </body>
 </html>
