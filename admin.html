@@ -9,12 +9,12 @@
 .wrap{max-width:1100px;margin:auto;padding:15px}
 .header{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;padding:12px 15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 8px #ddd;text-align:center;position:relative}
 .header img{height:70px;width:70px;object-fit:contain} .header h1{margin:0;color:#0b3d91;font-size:22px;text-align:center} .sub{color:#666;font-size:13px;text-align:center}
-.menuBtn{position:absolute;right:12px;top:12px;background:#0b3d91;color:#fff;border:0;border-radius:8px;padding:8px 12px;font-size:20px;cursor:pointer}
-.menuPanel{display:none;position:absolute;right:12px;top:55px;background:#fff;border-radius:10px;box-shadow:0 4px 15px #999;z-index:100;width:230px;padding:8px;text-align:left}
-.menuPanel button{display:block;width:100%;text-align:left;background:#eef2ff;border:0;padding:10px;border-radius:6px;margin:4px 0;cursor:pointer;font-weight:bold;color:#0b3d91}
+.menuBtn{position:absolute;right:12px;top:12px;background:#0b3d91;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:20px;cursor:pointer}
+.menuPanel{display:none;position:absolute;right:12px;top:55px;background:#fff;border-radius:10px;box-shadow:0 4px 15px #999;z-index:100;width:250px;padding:8px;text-align:left;border:1px solid #ddd}
+.menuPanel button{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #eee;padding:11px 10px;cursor:pointer;font-weight:600;color:#0b3d91;font-size:13px}
 .menuPanel button:hover{background:#0b3d91;color:#fff}
 .box{background:#fff;border-radius:10px;padding:15px;margin-bottom:15px;box-shadow:0 1px 5px #ddd}
-.box h2{margin:0 0 12px;color:#0b3d91;font-size:18px;padding-bottom:6px;cursor:pointer}
+.box h2{margin:0 0 12px;color:#0b3d91;font-size:18px;padding-bottom:6px}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px} .row>*{flex:1;min-width:140px} label{font-size:12px;color:#555;display:block;margin-bottom:2px}
 input,select{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:14px}
 .btn{border:0;padding:9px 14px;border-radius:6px;color:#fff;font-weight:bold;cursor:pointer;font-size:13px;margin:2px}
@@ -39,29 +39,32 @@ body{background:#fff;margin:0} .no-print{display:none!important} .wrap{max-width
 </style>
 </head>
 <body>
-<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password"><br><br><button class="btn g" onclick="checkPwd()" style="width:100%">Login</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p><p style="font-size:11px;color:#666" id="netStatus">Status: Online</p></div></div>
+<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password" onkeypress="if(event.key==='Enter'){checkPwd()}"><br><br><button class="btn g" onclick="checkPwd()" style="width:100%">Login</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p><p style="font-size:11px;color:#666" id="netStatus">Status: Online</p></div></div>
 
 <div class="wrap no-print" id="mainApp" style="display:none">
 <div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464 | <span id="netStatus2">Online</span></div></div>
 <button class="menuBtn" onclick="toggleMenu()">⋮</button>
 <div id="menuPanel" class="menuPanel">
-<button onclick="openSec('prodSec')">📦 Product Entry / Sale</button>
-<button onclick="openSec('invItemsSec')">🧾 Invoice Items</button>
-<button onclick="openSec('stockEntrySec')">📦 Total Stock Entry</button>
-<button onclick="openSec('manageSec')">⚙️ Manage Products</button>
-<button onclick="openSec('salarySec')">💰 Salary System</button>
-<button onclick="openSec('incomeSec')">📊 Income / Expense & Summary</button>
-<button onclick="openSec('stockDetailSec')">📋 Stock Detail</button>
-<button onclick="toggleMenu()">❌ Close Menu</button>
+<button onclick="openSec('invItemsSec')">Invoice Items</button>
+<button onclick="openSec('stockEntrySec')">Total Stock Entry</button>
+<button onclick="openSec('manageSec')">Manage Products</button>
+<button onclick="openSec('salarySec')">Salary System</button>
+<button onclick="openSec('incomeSec')">Income / Expense & Summary</button>
+<button onclick="openSec('stockDetailSec')">Stock Detail</button>
+<button onclick="toggleMenu()" style="background:#f2f2f2;color:#333">Close Menu</button>
 </div>
 </div>
 
-<!-- MAIN PAGE PAR REHNE WALE BOX -->
 <div class="box"><h2>1. Customer Details</h2>
 <div class="row"><div><label>Invoice No:</label><input id="invNo" value="001"></div><div><label>Invoice Date:</label><input id="invDate" type="date" value="2026-10-20"></div><div><label>Customer ID:</label><input id="custCode" placeholder="Customer ID"></div><div><label>Customer Name:</label><input id="custName" placeholder="Customer Name"></div></div>
 <div class="row"><div><label>CNIC No:</label><input id="custCNIC" placeholder="CNIC No."></div><div><label>Address:</label><input id="custAddr" placeholder="Address"></div><div><label>Action</label><div><button class="btn eb" onclick="secure('editCustomer')">Edit</button> <button class="btn r" onclick="secure('deleteCustomer')">Delete</button></div></div></div></div>
 
-<div class="box"><h2>Invoice</h2>
+<div class="box"><h2>2. Product Entry / Sale</h2>
+<div class="row"><div><label>Product</label><select id="saleProd"></select></div><div><label>Qty</label><input id="saleQty" type="number" placeholder="Qty"></div><div><label>Bon</label><input id="saleBon" placeholder="Bon"></div><div><label>Batch No</label><input id="saleBatch" placeholder="Batch No"></div></div>
+<div class="row"><div><label>MFG Date</label><input id="saleMFG" type="date"></div><div><label>Expiry Date</label><input id="saleExp" type="date"></div><div><label>TP</label><input id="saleTP" type="number" placeholder="TP"></div><div><label>Discount %</label><input id="saleDisc" type="number" placeholder="Discount %"></div></div>
+<button class="btn g" onclick="addItem()">+ Add Item</button> <button class="btn g2" onclick="addNewProduct()">+ New Product</button></div>
+
+<div class="box"><h2>3. Invoice</h2>
 <button class="btn g" onclick="saveInvoice()">Save Invoice</button>
 <button class="btn g2" onclick="viewInvoice()">View Invoice</button>
 <button class="btn o" onclick="printInvoice()">Print Invoice (A4)</button>
@@ -70,35 +73,29 @@ body{background:#fff;margin:0} .no-print{display:none!important} .wrap{max-width
 <button class="btn o" onclick="summary()">Summary</button>
 <div id="invoiceList" style="margin-top:10px"></div></div>
 
-<!-- MENU SE OPEN HONE WALE BOX -->
-<div id="prodSec" class="box hide"><h2>2. Product Entry / Sale</h2>
-<div class="row"><div><label>Product</label><select id="saleProd"></select></div><div><label>Qty</label><input id="saleQty" type="number" placeholder="Qty"></div><div><label>Bon</label><input id="saleBon" placeholder="Bon"></div><div><label>Batch No</label><input id="saleBatch" placeholder="Batch No"></div></div>
-<div class="row"><div><label>MFG Date</label><input id="saleMFG" type="date"></div><div><label>Expiry Date</label><input id="saleExp" type="date"></div><div><label>TP</label><input id="saleTP" type="number" placeholder="TP"></div><div><label>Discount %</label><input id="saleDisc" type="number" placeholder="Discount %"></div></div>
-<button class="btn g" onclick="addItem()">+ Add Item</button> <button class="btn g2" onclick="addNewProduct()">+ New Product</button></div>
-
 <div id="invItemsSec" class="box hide"><h2>Invoice Items</h2><table><thead><tr><th>Item</th><th>Product</th><th>Qty</th><th>Bon</th><th>Batch No</th><th>MFG</th><th>Expiry</th><th>Discount</th><th>TP</th><th>Total</th><th>Action</th></tr></thead><tbody id="itemsBody"></tbody></table><h3 id="grandTotal" style="font-size:13px">Total: 0</h3></div>
 
-<div id="stockEntrySec" class="box hide"><h2>3. Total Stock Entry</h2>
+<div id="stockEntrySec" class="box hide"><h2>Total Stock Entry</h2>
 <div class="row"><div><label>Select Product</label><select id="stockProd"></select></div><div><label>Stock Qty</label><input id="stockQty" type="number" placeholder="Stock Qty"></div><div><label>MRP</label><input id="stockMRP" type="number" placeholder="MRP"></div><div><label>TP</label><input id="stockTP" type="number" placeholder="TP"></div></div>
 <div class="row"><div><label>MFG Date</label><input id="stockMFG" type="date"></div><div><label>Expiry Date</label><input id="stockExp" type="date"></div><div><label>Batch No</label><input id="stockBatch" placeholder="Batch No"></div></div>
 <button class="btn g" onclick="addStock()">+ Add Stock</button> <button class="btn g2" onclick="secure('editStock')">Edit Stock</button> <button class="btn r" onclick="secure('deleteStock')">Delete Stock</button> <button class="btn o" onclick="printStock()">Print Stock</button></div>
 
-<div id="manageSec" class="box hide"><h2>4. Manage Products</h2>
+<div id="manageSec" class="box hide"><h2>Manage Products</h2>
 <div class="row"><div><label>Form</label><select id="newForm"><option>Syrup</option><option>Sachets</option><option>Tablet</option><option>Drops</option><option>Softgel</option><option>Capsule</option></select></div><div><label>Product Name</label><input id="newName" placeholder="GM-NEW"></div><div><label>&nbsp;</label><button class="btn g" onclick="addNewProduct2()">+ Add Product</button></div></div><div id="prodManageList"></div></div>
 
-<div id="salarySec" class="box hide"><h2>5. Salary System</h2>
+<div id="salarySec" class="box hide"><h2>Salary System</h2>
 <div class="row"><div><label>Employee Name</label><input id="empName" placeholder="Employee Name"></div><div><label>CNIC No</label><input id="empCNIC" placeholder="CNIC No"></div><div><label>Date of Joining</label><input id="empJoin" type="date"></div><div><label>Working Days</label><input id="empWork" type="number" placeholder="Working Days" oninput="calcSalary()"></div></div>
 <div class="row"><div><label>Absent Days</label><input id="empAbsent" type="number" value="0" oninput="calcSalary()"></div><div><label>Basic Salary</label><input id="empBasic" type="number" placeholder="Basic Salary" oninput="calcSalary()"></div><div><label>Incentive</label><input id="empInc" type="number" value="0" oninput="calcSalary()"></div><div><label>Total Salary (Auto)</label><input id="empTotal" readonly style="background:#e8f5e9;font-weight:bold"></div></div>
 <button class="btn g" onclick="addSalary()">+ Add Salary</button> <button class="btn eb" onclick="secure('editSalary')">Edit Salary</button> <button class="btn r" onclick="secure('deleteSalary')">Delete Salary</button> <button class="btn o" onclick="printSalary()">Print Salary Slip</button>
 <div id="salaryList" style="margin-top:10px"></div></div>
 
-<div id="incomeSec" class="box hide"><h2>6. Income / Expense & Monthly Summary</h2>
+<div id="incomeSec" class="box hide"><h2>Income / Expense & Monthly Summary</h2>
 <div style="background:#eef4ff;padding:10px;border-radius:8px;margin-bottom:10px"><b>Total Income (Invoices se Auto):</b> Rs.<span id="totalInc">0</span> &nbsp; | &nbsp; <b>Total Expense:</b> Rs.<span id="totalExp">0</span> &nbsp; | &nbsp; <b>Profit:</b> Rs.<span id="totalProfit">0</span></div>
 <div class="row"><div><label>Date</label><input id="expDate" type="date" value="2026-10-20"></div><div><label>Expense Type</label><select id="expType"><option>Salary</option><option>Rent</option><option>WAPDA / Light Bill</option><option>Fuel / Petrol</option><option>Transport</option><option>Office Expense</option><option>Other</option></select></div><div><label>Description</label><input id="expDesc" placeholder="e.g. Oct Salary - Ahmed"></div><div><label>Amount</label><input id="expAmt" type="number" placeholder="Amount"></div></div>
 <button class="btn g" onclick="addExpense()">+ Add Expense</button> <button class="btn g2" onclick="viewSummarySheet()">View Monthly Summary</button> <button class="btn o" onclick="printSummarySheet()">Print Summary Sheet</button>
 <div id="expList" style="margin-top:10px"></div></div>
 
-<div id="stockDetailSec" class="box hide"><h2>7. Stock Detail</h2><div id="stockList"></div></div>
+<div id="stockDetailSec" class="box hide"><h2>Stock Detail</h2><div id="stockList"></div></div>
 </div>
 
 <div id="invModal" class="modal"><div class="modal-box" id="printArea">
@@ -119,7 +116,7 @@ const CLIENT_ID='YOUR_CLIENT_ID.apps.googleusercontent.com';
 function checkPwd(){if(document.getElementById('pwd').value==='gmb777'){document.getElementById('lock').style.display='none';document.getElementById('mainApp').style.display='block';}else{document.getElementById('pwdErr').style.display='block';}}
 function secure(fnName,arg){let p=prompt('Edit/Delete ke liye Security Password lagayen:'); if(p!=='gmb888'){alert('Wrong Password! Edit/Delete nahi hoga.'); return;} if(arg!==undefined){window[fnName](arg);} else {window[fnName]();}}
 function toggleMenu(){let m=document.getElementById('menuPanel'); m.style.display=m.style.display==='block'?'none':'block';}
-function openSec(id){['prodSec','invItemsSec','stockEntrySec','manageSec','salarySec','incomeSec','stockDetailSec'].forEach(s=>document.getElementById(s).classList.add('hide')); document.getElementById(id).classList.remove('hide'); document.getElementById('menuPanel').style.display='none'; window.scrollTo({top:document.getElementById(id).offsetTop-10,behavior:'smooth'});}
+function openSec(id){['invItemsSec','stockEntrySec','manageSec','salarySec','incomeSec','stockDetailSec'].forEach(s=>document.getElementById(s).classList.add('hide')); document.getElementById(id).classList.remove('hide'); document.getElementById('menuPanel').style.display='none'; window.scrollTo({top:document.getElementById(id).offsetTop-10,behavior:'smooth'});}
 let products=["1. Syrup-GM-APTI","2. Sachets-GM-BERRY","3. Syrup-GM-CAL","4. Tablet-GM-CAL","5. Syrup-GM-CID","6. Drops-GM-D","7. Syrup-GM-LEAF","8. Syrup-GM-VIT","9. Tablet-GM-VIT","10. Softgel-Thy-D Plus","11. Tablet-GM-D 5000 IU"];
 let saved=JSON.parse(localStorage.getItem('gmbProds')||'null'); if(saved) products=saved;
 let stock={}; products.forEach(p=>stock[p]={total:1000,sale:0,mfg:'',exp:'',batch:''});
@@ -146,7 +143,6 @@ function delSalaryOne(i){if(confirm('Delete Salary '+salaries[i].name+' ?')){sal
 function renderSalary(){document.getElementById('salaryList').innerHTML=salaries.map((s,i)=>`<div class="stock-item"><span>${i+1}. ${s.name} | CNIC:${s.cnic} | Join:${s.join} | Work:${s.work} Abs:${s.abs} | Basic:${s.basic} Inc:${s.inc} | <b>Total:${s.total}</b></span><span><button class="btn o" onclick="printOneSalary(${i})">Print Slip</button><button class="btn eb" onclick="secure('editSalaryOne',${i})">Edit</button><button class="btn r" onclick="secure('delSalaryOne',${i})">Delete</button></span></div>`).join('');}
 function printOneSalary(i){let s=salaries[i]; document.getElementById('invContent').innerHTML=`<h3 style="font-size:14px;text-align:center;margin:10px 0">Salary Slip</h3><table class="inv-table"><tr><td><b>Employee Name:</b> ${s.name}</td><td><b>CNIC No:</b> ${s.cnic}</td><td><b>Date of Joining:</b> ${s.join}</td></tr><tr><td><b>Working Days:</b> ${s.work}</td><td><b>Absent Days:</b> ${s.abs}</td><td><b>Present Days:</b> ${s.work - s.abs}</td></tr><tr><td><b>Basic Salary:</b> Rs.${s.basic}</td><td><b>Incentive:</b> Rs.${s.inc}</td><td><b>Total Salary: Rs.${s.total}</b></td></tr></table><div style="margin-top:2in;text-align:right;font-size:13px"><div style="border-top:1px solid #000;display:inline-block;padding-top:4px;min-width:150px;text-align:center"><b>Signature</b></div></div>`; document.getElementById('invFoot').style.display='none'; openModal();}
 function printSalary(){if(!salaries.length){alert('Add Salary First');return;} printOneSalary(salaries.length-1);}
-// INCOME / EXPENSE
 function getIncome(){return invoices.reduce((a,b)=>a+(b.total||0),0);}
 function getExpense(){return expenses.reduce((a,b)=>a+(parseFloat(b.amt)||0),0);}
 function renderExpenses(){let inc=getIncome(), exp=getExpense(); document.getElementById('totalInc').innerText=inc; document.getElementById('totalExp').innerText=exp; document.getElementById('totalProfit').innerText=inc-exp; document.getElementById('expList').innerHTML=expenses.map((e,i)=>`<div class="stock-item"><span>${i+1}. ${e.date} | ${e.type} | ${e.desc} | Rs.${e.amt}</span><span><button class="btn eb" onclick="secure('editExp',${i})">Edit</button><button class="btn r" onclick="secure('delExp',${i})">Delete</button></span></div>`).join('')||'<div>No Expense Yet</div>';}
