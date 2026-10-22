@@ -52,7 +52,7 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 @page{size:A4;margin:0.3in}
 @media print{body{background:#fff;margin:0} .no-print{display:none!important} .wrap{max-width:100%;padding:0} .modal{display:block!important;position:static;background:#fff;padding:0} .modal-box{max-width:100%;box-shadow:none;padding:0;margin:0;width:100%} *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
 </style></head><body>
-<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password" onkeypress="if(event.key==='Enter'){checkPwd()}"><br><br><button class="btn g" onclick="checkPwd()" style="width:100%">Login</button><br><button class="btn o" onclick="forceUnlock()" style="width:100%;margin-top:8px">Unlock Without Password</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p><p style="font-size:11px;color:#666" id="netStatus">Status: Online</p></div></div>
+<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password" autocomplete="off"><br><br><button class="btn g" onclick="checkPwd()" style="width:100%">Login</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p><p style="font-size:11px;color:#666">Status: Online</p></div></div>
 <div class="wrap no-print" id="mainApp" style="display:none">
 <div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464 | <span id="netStatus2">Online</span></div></div>
 <button class="menuBtn" onclick="toggleMenu()">⋮</button>
@@ -126,10 +126,8 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 </div></div>
 <script>
 const CLIENT_ID='YOUR_CLIENT_ID.apps.googleusercontent.com';
-function doUnlock(){document.getElementById('lock').style.display='none';document.getElementById('mainApp').style.display='block';try{localStorage.setItem('gmb_login','ok');}catch(e){}}
-function forceUnlock(){doUnlock();}
-function checkPwd(){let el=document.getElementById('pwd'); let v=el?el.value.trim():''; if(v==='gmb777'||v==='GMB777'||v==='gmb888'){doUnlock();}else{let e=document.getElementById('pwdErr'); if(e){e.style.display='block'; e.innerText='Wrong Password! Sahi gmb777 hai - ya neeche orange button dabao';}}}
-try{if(localStorage.getItem('gmb_login')==='ok'){window.addEventListener('load',function(){doUnlock();});}}catch(e){}
+function checkPwd(){var v=document.getElementById('pwd').value; v=v.replace(/ /g,''); if(v==='gmb777'){document.getElementById('lock').style.display='none';document.getElementById('mainApp').style.display='block';}else{document.getElementById('pwdErr').style.display='block';}}
+document.getElementById('pwd').addEventListener('keypress',function(e){if(e.key==='Enter'){checkPwd();}});
 function secure(fnName,arg){let p=prompt('Edit/Delete ke liye Security Password lagayen:'); if(p!=='gmb888'){alert('Wrong Password! Edit/Delete nahi hoga.'); return;} if(arg!==undefined){window[fnName](arg);} else {window[fnName]();}}
 function toggleMenu(){let m=document.getElementById('menuPanel'); m.style.display=m.style.display==='block'?'none':'block';}
 function openSec(id){['invItemsSec','stockEntrySec','manageSec','salarySec','incomeSec','stockDetailSec'].forEach(s=>document.getElementById(s).classList.add('hide')); document.getElementById(id).classList.remove('hide'); document.getElementById('menuPanel').style.display='none'; window.scrollTo({top:document.getElementById(id).offsetTop-10,behavior:'smooth'});}
@@ -168,13 +166,13 @@ return `<div class="slip"><div class="slip-head"><div class="slip-logo"><img src
 <tr><td>C.O.L.A</td><td>${fmt(t.cola)}</td><td>${fmt(t.cola)}</td><td>0.00</td><td>${fmt(t.cola)}</td><td>${fmt(t.cola)}</td></tr>
 <tr><td>Conveyance</td><td>${fmt(t.conv)}</td><td>0.00</td><td>${fmt(t.conv)}</td><td>${fmt(t.conv)}</td></tr>
 <tr><td>Special Allowance</td><td>${fmt(t.spec)}</td><td>0.00</td><td>${fmt(t.spec)}</td></tr>
-<tr><td>Medical 2</td><td>${fmt(t.med)}</td><td>${fmt(t.med)}</td><td>0.00</td><td>${fmt(t.med)}</td><td>${fmt(t.med)}</td></tr>
+<tr><td>Medical 2</td><td>${fmt(t.med)}</td><td>0.00</td><td>${fmt(t.med)}</td></tr>
 <tr class="tot"><td>Totals</td><td>${fmt(t.earn)}</td><td>${fmt(t.earn)}</td><td>0.00</td><td>${fmt(t.earn)}</td><td>${fmt(t.earn)}</td></tr></table></div>
 <div class="slip-sec"><b>Reimbursement Details</b><table class="slip-table"><tr><th>Wage Description</th><th>YTD Amount</th><th>Arrear Amount</th><th>Current Amount</th><th>Total Amount</th></tr>
 <tr><td>Mobile Phone Exp.</td><td>${fmt(t.mob)}</td><td>0.00</td><td>${fmt(t.mob)}</td><td>${fmt(t.mob)}</td></tr>
 <tr><td>Vehicle Maintenance Exp</td><td>${fmt(t.veh)}</td><td>0.00</td><td>${fmt(t.veh)}</td><td>${fmt(t.veh)}</td></tr>
 <tr><td>Daily Allowance</td><td>${fmt(t.daily)}</td><td>0.00</td><td>${fmt(t.daily)}</td></tr>
-<tr><td>Big city Allowance</td><td>${fmt(t.big)}</td><td>0.00</td><td>${fmt(t.big)}</td><td>${fmt(t.big)}</td></tr>
+<tr><td>Big city Allowance</td><td>${fmt(t.big)}</td><td>0.00</td><td>${fmt(t.big)}</td></tr>
 <tr><td>Parking/Tool Tax Expense</td><td>${fmt(t.park)}</td><td>0.00</td><td>${fmt(t.park)}</td><td>${fmt(t.park)}</td></tr>
 <tr class="tot"><td>Totals</td><td>${fmt(t.reimb)}</td><td>0.00</td><td>${fmt(t.reimb)}</td><td>${fmt(t.reimb)}</td></tr></table></div>
 <div class="slip-sec"><b>Deduction Details</b><table class="slip-table"><tr><th>Wage Description</th><th>YTD Amount</th><th>Arrear Amount</th><th>Current Amount</th><th>Total Amount</th></tr>
@@ -229,7 +227,7 @@ function backupToDrive(){autoSync(); if(!navigator.onLine){alert('Offline hai - 
 function syncToDrive(force){if(!navigator.onLine) return; if(typeof gapi==='undefined') return; try{gapi.load('client:auth2',()=>{gapi.auth2.init({client_id:CLIENT_ID}).then(()=>{let auth=gapi.auth2.getAuthInstance(); if(!auth.isSignedIn.get()){ if(force) auth.signIn().then(()=>uploadToDrive()); } else uploadToDrive();});});}catch(e){}}
 function uploadToDrive(){let data=localStorage.getItem('gmbDriveBackup'); if(!data) return; let token=gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token; fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',{method:'POST',headers:{Authorization:'Bearer '+token},body:createDriveBody(data)}).then(r=>r.json()).then(j=>{localStorage.setItem('gmbPendingSync','0');}).catch(e=>{});}
 function createDriveBody(data){let boundary='gmb'; let meta=JSON.stringify({name:'gmb-pharma-backup.json',mimeType:'application/json'}); let body='--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+meta+'\r\n--'+boundary+'\r\nContent-Type: application/json\r\n\r\n'+data+'\r\n--'+boundary+'--'; return new Blob([body],{type:'multipart/related; boundary='+boundary});}
-function updateNet(){let s=navigator.onLine?'Online':'Offline - Data phone me save ho raha hai'; let e1=document.getElementById('netStatus'); if(e1) e1.innerText='Status: '+s; let el=document.getElementById('netStatus2'); if(el) el.innerText=s;}
+function updateNet(){let s=navigator.onLine?'Online':'Offline - Data phone me save ho raha hai'; let el=document.getElementById('netStatus2'); if(el) el.innerText=s;}
 window.addEventListener('online',()=>{updateNet(); autoSync(); alert('Internet Connected - Auto Sync ho raha hai');});
 window.addEventListener('offline',()=>{updateNet();});
 function summary(){alert('Summary\nTotal Income: Rs.'+getIncome()+'\nTotal Expense: Rs.'+getExpense()+'\nProfit: Rs.'+(getIncome()-getExpense())+'\nTotal Invoices: '+invoices.length);}
