@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GMB PHARMA - Admin</title>
 <script src="https://apis.google.com/js/api.js"></script>
 <style>
 *{box-sizing:border-box} body{font-family:Arial;margin:0;background:#f4f6f8;color:#222;font-size:13px}
 .wrap{max-width:1100px;margin:auto;padding:15px}
-.header{display:flex;align-items:center;gap:10px;background:#fff;padding:12px 12px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 8px #ddd;position:relative}
-.header img{height:60px;width:60px;object-fit:contain;flex-shrink:0} .header h1{margin:0;color:#0b3d91;font-size:18px;line-height:1.2} .sub{color:#666;font-size:12px}
-.menuBtn{margin-left:auto;background:#0b3d91;color:#fff;border:0;border-radius:8px;padding:8px 12px;font-size:20px;cursor:pointer;flex-shrink:0;z-index:5}
-.menuPanel{display:none;position:absolute;right:10px;top:65px;background:#fff;border-radius:10px;box-shadow:0 4px 15px #999;z-index:999;width:260px;padding:8px;border:1px solid #ddd}
-.menuPanel button{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #eee;padding:12px 10px;cursor:pointer;font-weight:600;color:#0b3d91;font-size:13px}
+.header{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;padding:12px 15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 8px #ddd;text-align:center;position:relative}
+.header img{height:70px;width:70px;object-fit:contain} .header h1{margin:0;color:#0b3d91;font-size:22px;text-align:center} .sub{color:#666;font-size:13px;text-align:center}
+.menuBtn{position:absolute;right:12px;top:12px;background:#0b3d91;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:20px;cursor:pointer}
+.menuPanel{display:none;position:absolute;right:12px;top:55px;background:#fff;border-radius:10px;box-shadow:0 4px 15px #999;z-index:100;width:250px;padding:8px;text-align:left;border:1px solid #ddd}
+.menuPanel button{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #eee;padding:11px 10px;cursor:pointer;font-weight:600;color:#0b3d91;font-size:13px}
 .menuPanel button:hover{background:#0b3d91;color:#fff}
 .box{background:#fff;border-radius:10px;padding:15px;margin-bottom:15px;box-shadow:0 1px 5px #ddd}
 .box h2{margin:0 0 12px;color:#0b3d91;font-size:18px;padding-bottom:6px}
@@ -49,29 +51,41 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 .slip-sign .line{border-top:1px solid #000;display:inline-block;min-width:160px;padding-top:3px;text-align:center;font-size:11px}
 .calc-box{background:#eef4ff;border:1px solid #0b3d91;border-radius:8px;padding:10px;margin:10px 0;font-size:13px;line-height:1.9}
 .calc-box b{color:#0b3d91}
-@page{size:A4;margin:0.3in}
-@media print{body{background:#fff;margin:0} .no-print{display:none!important} .wrap{max-width:100%;padding:0} .modal{display:block!important;position:static;background:#fff;padding:0} .modal-box{max-width:100%;box-shadow:none;padding:0;margin:0;width:100%} *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
-</style></head><body>
-<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password" autocomplete="off"><br><br><button class="btn g" style="width:100%" onclick="if(document.getElementById('pwd').value.replace(/ /g,'')==='gmb777'){document.getElementById('lock').style.display='none';document.getElementById('mainApp').style.display='block'}else{document.getElementById('pwdErr').style.display='block'}">Login</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p><p style="font-size:11px;color:#666">Status: Online</p></div></div>
+@page{size:A4;margin:0.5in}
+@media print{
+body{background:#fff;margin:0} .no-print{display:none!important} .wrap{max-width:100%;padding:0} .modal{display:block!important;position:static;background:#fff;padding:0}
+.modal-box{max-width:100%;box-shadow:none;padding:0;margin:0;width:100%}
+.print-header img{height:55px!important;width:55px!important}
+*{ -webkit-print-color-adjust:exact!important; print-color-adjust:exact!important }
+}
+</style>
+</head>
+<body>
+<div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password" onkeypress="if(event.key==='Enter'){checkPwd()}"><br><br><button class="btn g" onclick="checkPwd()" style="width:100%">Login</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p><p style="font-size:11px;color:#666" id="netStatus">Status: Online</p></div></div>
+
 <div class="wrap no-print" id="mainApp" style="display:none">
-<div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div style="flex:1"><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464 | <span id="netStatus2">Online</span></div></div>
-<button class="menuBtn" onclick="var m=document.getElementById('menuPanel');m.style.display=m.style.display==='block'?'none':'block'">⋮</button>
+<div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464 | <span id="netStatus2">Online</span></div></div>
+<button class="menuBtn" onclick="toggleMenu()">⋮</button>
 <div id="menuPanel" class="menuPanel">
-<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('invItemsSec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('invItemsSec').scrollIntoView()">Invoice Items</button>
-<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('stockEntrySec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('stockEntrySec').scrollIntoView()">Total Stock Entry</button>
-<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('manageSec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('manageSec').scrollIntoView()">Manage Products</button>
-<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('salarySec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('salarySec').scrollIntoView()">Salary System</button>
-<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('incomeSec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('incomeSec').scrollIntoView()">Income / Expense & Summary</button>
-<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('stockDetailSec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('stockDetailSec').scrollIntoView()">Stock Detail</button>
-<button onclick="document.getElementById('menuPanel').style.display='none'" style="background:#f2f2f2;color:#333">Close Menu</button>
-</div></div>
+<button onclick="openSec('invItemsSec')">Invoice Items</button>
+<button onclick="openSec('stockEntrySec')">Total Stock Entry</button>
+<button onclick="openSec('manageSec')">Manage Products</button>
+<button onclick="openSec('salarySec')">Salary System</button>
+<button onclick="openSec('incomeSec')">Income / Expense & Summary</button>
+<button onclick="openSec('stockDetailSec')">Stock Detail</button>
+<button onclick="toggleMenu()" style="background:#f2f2f2;color:#333">Close Menu</button>
+</div>
+</div>
+
 <div class="box"><h2>1. Customer Details</h2>
 <div class="row"><div><label>Invoice No:</label><input id="invNo" value="001"></div><div><label>Invoice Date:</label><input id="invDate" type="date" value="2026-10-20"></div><div><label>Customer ID:</label><input id="custCode" placeholder="Customer ID"></div><div><label>Customer Name:</label><input id="custName" placeholder="Customer Name"></div></div>
 <div class="row"><div><label>CNIC No:</label><input id="custCNIC" placeholder="CNIC No."></div><div><label>Address:</label><input id="custAddr" placeholder="Address"></div><div><label>Action</label><div><button class="btn eb" onclick="secure('editCustomer')">Edit</button> <button class="btn r" onclick="secure('deleteCustomer')">Delete</button></div></div></div></div>
+
 <div class="box"><h2>2. Product Entry / Sale</h2>
 <div class="row"><div><label>Product</label><select id="saleProd"></select></div><div><label>Qty</label><input id="saleQty" type="number" placeholder="Qty"></div><div><label>Bon</label><input id="saleBon" placeholder="Bon"></div><div><label>Batch No</label><input id="saleBatch" placeholder="Batch No"></div></div>
 <div class="row"><div><label>MFG Date</label><input id="saleMFG" type="date"></div><div><label>Expiry Date</label><input id="saleExp" type="date"></div><div><label>TP</label><input id="saleTP" type="number" placeholder="TP"></div><div><label>Discount %</label><input id="saleDisc" type="number" placeholder="Discount %"></div></div>
 <button class="btn g" onclick="addItem()">+ Add Item</button> <button class="btn g2" onclick="addNewProduct()">+ New Product</button></div>
+
 <div class="box"><h2>3. Invoice</h2>
 <button class="btn g" onclick="saveInvoice()">Save Invoice</button>
 <button class="btn g2" onclick="viewInvoice()">View Invoice</button>
@@ -80,13 +94,17 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 <button class="btn d" onclick="backupToDrive()">Backup to Google Drive</button>
 <button class="btn o" onclick="summary()">Summary</button>
 <div id="invoiceList" style="margin-top:10px"></div></div>
+
 <div id="invItemsSec" class="box hide"><h2>Invoice Items</h2><table><thead><tr><th>Item</th><th>Product</th><th>Qty</th><th>Bon</th><th>Batch No</th><th>MFG</th><th>Expiry</th><th>Discount</th><th>TP</th><th>Total</th><th>Action</th></tr></thead><tbody id="itemsBody"></tbody></table><h3 id="grandTotal" style="font-size:13px">Total: 0</h3></div>
+
 <div id="stockEntrySec" class="box hide"><h2>Total Stock Entry</h2>
 <div class="row"><div><label>Select Product</label><select id="stockProd"></select></div><div><label>Stock Qty</label><input id="stockQty" type="number" placeholder="Stock Qty"></div><div><label>MRP</label><input id="stockMRP" type="number" placeholder="MRP"></div><div><label>TP</label><input id="stockTP" type="number" placeholder="TP"></div></div>
 <div class="row"><div><label>MFG Date</label><input id="stockMFG" type="date"></div><div><label>Expiry Date</label><input id="stockExp" type="date"></div><div><label>Batch No</label><input id="stockBatch" placeholder="Batch No"></div></div>
 <button class="btn g" onclick="addStock()">+ Add Stock</button> <button class="btn g2" onclick="secure('editStock')">Edit Stock</button> <button class="btn r" onclick="secure('deleteStock')">Delete Stock</button> <button class="btn o" onclick="printStock()">Print Stock</button></div>
+
 <div id="manageSec" class="box hide"><h2>Manage Products</h2>
 <div class="row"><div><label>Form</label><select id="newForm"><option>Syrup</option><option>Sachets</option><option>Tablet</option><option>Drops</option><option>Softgel</option><option>Capsule</option></select></div><div><label>Product Name</label><input id="newName" placeholder="GM-NEW"></div><div><label>&nbsp;</label><button class="btn g" onclick="addNewProduct2()">+ Add Product</button></div></div><div id="prodManageList"></div></div>
+
 <div id="salarySec" class="box hide"><h2>Salary System</h2>
 <div class="row"><div><label>Employee No</label><input id="sEmpNo" placeholder="Employee No"></div><div><label>Employee Name</label><input id="sName" placeholder="Employee Name"></div><div><label>Location</label><input id="sLoc" placeholder="Location"></div><div><label>Department</label><input id="sDept" placeholder="Department"></div></div>
 <div class="row"><div><label>Payroll Area</label><input id="sPay" placeholder="Payroll Area"></div><div><label>Position</label><input id="sPos" placeholder="Position"></div><div><label>Cost Center</label><input id="sCost" placeholder="Cost Center"></div><div><label>Appointment Date</label><input id="sApp" type="date"></div></div>
@@ -105,13 +123,16 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 <button class="btn o" onclick="printSlipOnly()">Print Salary Slip</button>
 <div id="slipPrintArea" style="margin-top:12px"></div>
 <div id="slipList" style="margin-top:10px"></div></div>
+
 <div id="incomeSec" class="box hide"><h2>Income / Expense & Monthly Summary</h2>
 <div style="background:#eef4ff;padding:10px;border-radius:8px;margin-bottom:10px"><b>Total Income (Invoices se Auto):</b> Rs.<span id="totalInc">0</span> &nbsp; | &nbsp; <b>Total Expense:</b> Rs.<span id="totalExp">0</span> &nbsp; | &nbsp; <b>Profit:</b> Rs.<span id="totalProfit">0</span></div>
 <div class="row"><div><label>Date</label><input id="expDate" type="date" value="2026-10-20"></div><div><label>Expense Type</label><select id="expType"><option>Salary</option><option>Rent</option><option>WAPDA / Light Bill</option><option>Fuel / Petrol</option><option>Transport</option><option>Office Expense</option><option>Other</option></select></div><div><label>Description</label><input id="expDesc" placeholder="e.g. Oct Salary - Ahmed"></div><div><label>Amount</label><input id="expAmt" type="number" placeholder="Amount"></div></div>
 <button class="btn g" onclick="addExpense()">+ Add Expense</button> <button class="btn g2" onclick="viewSummarySheet()">View Monthly Summary</button> <button class="btn o" onclick="printSummarySheet()">Print Summary Sheet</button>
 <div id="expList" style="margin-top:10px"></div></div>
+
 <div id="stockDetailSec" class="box hide"><h2>Stock Detail</h2><div id="stockList"></div></div>
 </div>
+
 <div id="invModal" class="modal"><div class="modal-box" id="printArea">
 <div id="invHead" class="print-header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div><h2>GMB PHARMA KARACHI PAKISTAN</h2><div class="addr">Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi - Pakistan<br>Phone: 0345-0707464 | NTN: 8781968 | License: 0447</div></div></div>
 <div id="invContent" style="font-size:13px"></div>
@@ -124,9 +145,13 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 </div>
 <br><button class="btn g no-print" onclick="window.print()">Print</button> <button class="btn r no-print" onclick="closeModal()">Close</button>
 </div></div>
+
 <script>
 const CLIENT_ID='YOUR_CLIENT_ID.apps.googleusercontent.com';
+function checkPwd(){if(document.getElementById('pwd').value==='gmb777'){document.getElementById('lock').style.display='none';document.getElementById('mainApp').style.display='block';}else{document.getElementById('pwdErr').style.display='block';}}
 function secure(fnName,arg){let p=prompt('Edit/Delete ke liye Security Password lagayen:'); if(p!=='gmb888'){alert('Wrong Password! Edit/Delete nahi hoga.'); return;} if(arg!==undefined){window[fnName](arg);} else {window[fnName]();}}
+function toggleMenu(){let m=document.getElementById('menuPanel'); m.style.display=m.style.display==='block'?'none':'block';}
+function openSec(id){['invItemsSec','stockEntrySec','manageSec','salarySec','incomeSec','stockDetailSec'].forEach(s=>document.getElementById(s).classList.add('hide')); document.getElementById(id).classList.remove('hide'); document.getElementById('menuPanel').style.display='none'; window.scrollTo({top:document.getElementById(id).offsetTop-10,behavior:'smooth'});}
 let products=["1. Syrup-GM-APTI","2. Sachets-GM-BERRY","3. Syrup-GM-CAL","4. Tablet-GM-CAL","5. Syrup-GM-CID","6. Drops-GM-D","7. Syrup-GM-LEAF","8. Syrup-GM-VIT","9. Tablet-GM-VIT","10. Softgel-Thy-D Plus","11. Tablet-GM-D 5000 IU"];
 let saved=JSON.parse(localStorage.getItem('gmbProds')||'null'); if(saved) products=saved;
 let stock=JSON.parse(localStorage.getItem('gmbStock')||'null');
@@ -134,13 +159,15 @@ if(!stock){stock={}; products.forEach(p=>stock[p]={total:0,sale:0,mfg:'',exp:'',
 products.forEach(p=>{if(!stock[p]) stock[p]={total:0,sale:0,mfg:'',exp:'',batch:''};});
 function saveStock(){localStorage.setItem('gmbStock',JSON.stringify(stock));}
 let items=[]; let invoices=JSON.parse(localStorage.getItem('gmbInv')||'[]'); let salaries=JSON.parse(localStorage.getItem('gmbSal')||'[]'); let slips=JSON.parse(localStorage.getItem('gmbSlips')||'[]'); let expenses=JSON.parse(localStorage.getItem('gmbExp')||'[]');
-function fillSelects(){let h=products.map(p=>`<option>${p}</option>`).join(''); document.getElementById('stockProd').innerHTML=h; document.getElementById('saleProd').innerHTML=h; renderStock(); renderProdManage(); renderExpenses(); renderSlipList();}
+function fillSelects(){let h=products.map(p=>`<option>${p}</option>`).join(''); document.getElementById('stockProd').innerHTML=h; document.getElementById('saleProd').innerHTML=h; renderStock(); renderProdManage(); renderSlipList(); renderExpenses();}
 function renderProdManage(){document.getElementById('prodManageList').innerHTML=products.map((p,i)=>`<div style="display:flex;justify-content:space-between;background:#f9f9f9;padding:6px;border-radius:6px;margin:3px 0"><span>${p}</span><span><button class="btn eb" onclick="secure('editProd',${i})">Edit</button><button class="btn r" onclick="secure('delProd',${i})">Delete</button></span></div>`).join('')}
 function editProd(i){let n=prompt('Edit Product',products[i]); if(n){products[i]=n; localStorage.setItem('gmbProds',JSON.stringify(products)); fillSelects(); autoSync();}}
 function delProd(i){if(confirm('Delete '+products[i]+' ?')){products.splice(i,1); localStorage.setItem('gmbProds',JSON.stringify(products)); fillSelects(); autoSync();}}
 function renderStock(){document.getElementById('stockList').innerHTML=products.map((p,i)=>{let s=stock[p]||{total:0,sale:0,mfg:'',exp:''}; return `<div class="stock-item"><span>${i+1}. ${p} - Total: ${s.total} | Sale: ${s.sale} | Balance: ${s.total-s.sale} | MFG: ${s.mfg||'-'} | Exp: ${s.exp||'-'} | Batch: ${s.batch||'-'}</span></div>`).join('');}
+function editStockItem(p){let q=prompt('New Total Stock for '+p,stock[p].total); if(q!==null){stock[p].total=parseInt(q)||0; saveStock(); renderStock(); autoSync();}}
+function delStockItem(p){if(confirm('Delete Stock '+p+' ?')){stock[p].total=0; stock[p].sale=0; saveStock(); renderStock(); autoSync();}}
 function addStock(){let p=document.getElementById('stockProd').value; let q=parseInt(document.getElementById('stockQty').value||0); let mfg=document.getElementById('stockMFG').value||''; let exp=document.getElementById('stockExp').value||''; let batch=document.getElementById('stockBatch').value||''; if(!stock[p])stock[p]={total:0,sale:0,mfg:'',exp:'',batch:''}; stock[p].total+=q; stock[p].mfg=mfg; stock[p].exp=exp; stock[p].batch=batch; saveStock(); renderStock(); autoSync(); alert('Stock Added: '+p+' +'+q);}
-function editStock(){let p=document.getElementById('stockProd').value; let q=prompt('New Total Stock for '+p,stock[p].total); if(q!==null){stock[p].total=parseInt(q)||0; saveStock(); renderStock(); autoSync();}}
+function editStock(){editStockItem(document.getElementById('stockProd').value);}
 function deleteStock(){let p=document.getElementById('stockProd').value; if(confirm('Delete Stock '+p+' ?')){stock[p]={total:0,sale:0,mfg:'',exp:'',batch:''}; saveStock(); renderStock(); autoSync(); alert('Stock Deleted');}}
 function printStock(){let html='<h3 style="font-size:13px;text-align:center">Stock Detail Sheet</h3><table class="inv-table"><tr><th>Product</th><th>Total</th><th>Sale</th><th>Balance</th><th>MFG</th><th>Expiry</th><th>Batch</th></tr>'+products.map(p=>{let s=stock[p]||{total:0,sale:0}; return `<tr><td>${p}</td><td>${s.total}</td><td>${s.sale}</td><td>${s.total-s.sale}</td><td>${s.mfg||'-'}</td><td>${s.exp||'-'}</td><td>${s.batch||'-'}</td></tr>`}).join('')+'</table>'; document.getElementById('invContent').innerHTML=html; document.getElementById('invFoot').style.display='none'; openModal();}
 function addNewProduct2(){let form=document.getElementById('newForm').value; let name=document.getElementById('newName').value.trim().toUpperCase(); if(!name){alert('Enter Product Name');return;} let full=(products.length+1)+'. '+form+'-'+name; products.push(full); stock[full]={total:0,sale:0,mfg:'',exp:'',batch:''}; saveStock(); localStorage.setItem('gmbProds',JSON.stringify(products)); document.getElementById('newName').value=''; fillSelects(); autoSync(); alert('Product Added: '+full);}
@@ -151,33 +178,7 @@ function calcSlipLive(){try{let t=calcTotals(); document.getElementById('calcEar
 function getSlipData(){let ids=['sEmpNo','sName','sLoc','sDept','sPay','sPos','sCost','sApp','sConf','sCnic','sDays','sOver','sMonth','sYear','sBank','sBranch','sAcc','sBasic','sOther','sCola','sConv','sSpec','sMed','sMob','sVeh','sDaily','sBig','sPark','sPF','sEobi','sTaxInc','sPF2','sEmpC','sPFInc','sLoan','sNetBal']; let d={}; ids.forEach(id=>d[id]=document.getElementById(id).value||''); return d;}
 function setSlipData(d){Object.keys(d).forEach(k=>{let el=document.getElementById(k); if(el) el.value=d[k];}); calcSlipLive();}
 function calcTotalsFromData(d){let b=+d.sBasic||0, o=+d.sOther||0, cola=+d.sCola||0, conv=+d.sConv||0, spec=+d.sSpec||0, med=+d.sMed||0; let earn=b+o+cola+conv+spec+med; let mob=+d.sMob||0, veh=+d.sVeh||0, daily=+d.sDaily||0, big=+d.sBig||0, park=+d.sPark||0; let reimb=mob+veh+daily+big+park; let pf=+d.sPF||0, eobi=+d.sEobi||0; let ded=pf+eobi; let pay=earn+reimb; let net=pay-ded; return {b,o,cola,conv,spec,med,earn,mob,veh,daily,big,park,reimb,pf,eobi,ded,pay,net};}
-function buildSlipHTML(d){
-let t=calcTotalsFromData(d);
-return `<div class="slip"><div class="slip-head"><div class="slip-logo"><img src="images/logo.jpg"></div><div class="slip-title"><h2>GMB PHARMA KARACHI PAKISTAN</h2><div class="slip-addr">Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi - Pakistan<br>Ph: 0345-0707464, 0300-3953178 | gmb.pharma2023@gmail.com</div><h3>Employee Salary Slip for ${d.sMonth}, ${d.sYear}</h3></div></div>
-<div class="slip-info"><div>Employee No : ${d.sEmpNo}<br>Employee Name : ${d.sName}<br>Location : ${d.sLoc}<br>Department : ${d.sDept}<br>Payroll Area : ${d.sPay}<br>Position : ${d.sPos}</div><div>Cost Center : ${d.sCost}<br>Appointment Date : ${d.sApp}<br>Confirmation Date : ${d.sConf}<br>CNIC / NTN : ${d.sCnic}<br>Days Worked : ${d.sDays}<br>Overtime Hours : ${d.sOver}</div></div>
-<div class="slip-sec"><b>Salary Summary</b><table class="slip-table"><tr><th>Bank Name</th><th>Branch Name</th><th>Account No.</th><th>Total Payments</th><th>Total Deductions</th><th>Net Payables</th></tr><tr><td>${d.sBank}</td><td>${d.sBranch}</td><td>${d.sAcc}</td><td>${fmt(t.pay)}</td><td>${fmt(t.ded)}-</td><td>${fmt(t.net)}</td></tr></table></div>
-<div class="slip-sec"><b>Earning Details</b><table class="slip-table"><tr><th>Wage Description</th><th>Std. Salary</th><th>YTD Amount</th><th>Arrear Amount</th><th>Current Amount</th><th>Total Amount</th></tr>
-<tr><td>Basic Pay</td><td>${fmt(t.b)}</td><td>0.00</td><td>${fmt(t.b)}</td><td>${fmt(t.b)}</td></tr>
-<tr><td>Other Allowance</td><td>${fmt(t.o)}</td><td>0.00</td><td>${fmt(t.o)}</td></tr>
-<tr><td>C.O.L.A</td><td>${fmt(t.cola)}</td><td>${fmt(t.cola)}</td><td>0.00</td><td>${fmt(t.cola)}</td><td>${fmt(t.cola)}</td></tr>
-<tr><td>Conveyance</td><td>${fmt(t.conv)}</td><td>0.00</td><td>${fmt(t.conv)}</td><td>${fmt(t.conv)}</td></tr>
-<tr><td>Special Allowance</td><td>${fmt(t.spec)}</td><td>0.00</td><td>${fmt(t.spec)}</td></tr>
-<tr><td>Medical 2</td><td>${fmt(t.med)}</td><td>${fmt(t.med)}</td><td>0.00</td><td>${fmt(t.med)}</td><td>${fmt(t.med)}</td></tr>
-<tr class="tot"><td>Totals</td><td>${fmt(t.earn)}</td><td>${fmt(t.earn)}</td><td>0.00</td><td>${fmt(t.earn)}</td><td>${fmt(t.earn)}</td></tr></table></div>
-<div class="slip-sec"><b>Reimbursement Details</b><table class="slip-table"><tr><th>Wage Description</th><th>YTD Amount</th><th>Arrear Amount</th><th>Current Amount</th><th>Total Amount</th></tr>
-<tr><td>Mobile Phone Exp.</td><td>${fmt(t.mob)}</td><td>0.00</td><td>${fmt(t.mob)}</td><td>${fmt(t.mob)}</td></tr>
-<tr><td>Vehicle Maintenance Exp</td><td>${fmt(t.veh)}</td><td>0.00</td><td>${fmt(t.veh)}</td><td>${fmt(t.veh)}</td></tr>
-<tr><td>Daily Allowance</td><td>${fmt(t.daily)}</td><td>0.00</td><td>${fmt(t.daily)}</td></tr>
-<tr><td>Big city Allowance</td><td>${fmt(t.big)}</td><td>0.00</td><td>${fmt(t.big)}</td></tr>
-<tr><td>Parking/Tool Tax Expense</td><td>${fmt(t.park)}</td><td>0.00</td><td>${fmt(t.park)}</td><td>${fmt(t.park)}</td></tr>
-<tr class="tot"><td>Totals</td><td>${fmt(t.reimb)}</td><td>0.00</td><td>${fmt(t.reimb)}</td><td>${fmt(t.reimb)}</td></tr></table></div>
-<div class="slip-sec"><b>Deduction Details</b><table class="slip-table"><tr><th>Wage Description</th><th>YTD Amount</th><th>Arrear Amount</th><th>Current Amount</th><th>Total Amount</th></tr>
-<tr><td>PF Employee Cont.</td><td>${fmt(t.pf)}-</td><td>0.00</td><td>${fmt(t.pf)}-</td><td>${fmt(t.pf)}-</td></tr>
-<tr><td>EOBI Employee Cont.</td><td>${fmt(t.eobi)}-</td><td>0.00</td><td>${fmt(t.eobi)}-</td><td>${fmt(t.eobi)}-</td></tr>
-<tr class="tot"><td>Totals</td><td>${fmt(t.ded)}-</td><td>0.00</td><td>${fmt(t.ded)}-</td><td>${fmt(t.ded)}-</td></tr></table></div>
-<div class="slip-sec"><b>Income Tax Details</b><table class="slip-table"><tr><th>Taxable Income</th><th>Annual Tax</th><th>Salary YTD</th><th>Bonus YTD</th><th>Tax Liability</th></tr><tr><td>${fmt(d.sTaxInc)}</td><td>0.00</td><td>${fmt(t.earn)}</td><td>0.00</td><td>0.00</td></tr></table></div>
-<div class="slip-sec"><b>Provident Fund Details</b><table class="slip-table"><tr><th>Employee Contr.</th><th>Employer Contr.</th><th>Income</th><th>Loan Balance</th><th>Net Balance</th></tr><tr><td>${fmt(d.sPF2)}</td><td>${fmt(d.sEmpC)}</td><td>${fmt(d.sPFInc)}</td><td>${fmt(d.sLoan)}</td><td>${fmt(d.sNetBal)}</td></tr></table></div>
-<div class="slip-sign"><div class="line">Signature</div></div></div>`;}
+function buildSlipHTML(d){let t=calcTotalsFromData(d); return `<div class="slip"><div class="slip-head"><div class="slip-logo"><img src="images/logo.jpg"></div><div class="slip-title"><h2>GMB PHARMA KARACHI PAKISTAN</h2><div class="slip-addr">Street 19, Plot 1189, Azam Town, Near UBL Bank, Karachi - Pakistan<br>Ph: 0345-0707464, 0300-3953178 | gmb.pharma2023@gmail.com</div><h3>Employee Salary Slip for ${d.sMonth}, ${d.sYear}</h3></div></div><div class="slip-info"><div>Employee No : ${d.sEmpNo}<br>Employee Name : ${d.sName}<br>Location : ${d.sLoc}<br>Department : ${d.sDept}<br>Payroll Area : ${d.sPay}<br>Position : ${d.sPos}</div><div>Cost Center : ${d.sCost}<br>Appointment Date : ${d.sApp}<br>Confirmation Date : ${d.sConf}<br>CNIC / NTN : ${d.sCnic}<br>Days Worked : ${d.sDays}<br>Overtime Hours : ${d.sOver}</div></div><div class="slip-sec"><b>Salary Summary</b><table class="slip-table"><tr><th>Bank Name</th><th>Branch Name</th><th>Account No.</th><th>Total Payments</th><th>Total Deductions</th><th>Net Payables</th></tr><tr><td>${d.sBank}</td><td>${d.sBranch}</td><td>${d.sAcc}</td><td>${fmt(t.pay)}</td><td>${fmt(t.ded)}-</td><td>${fmt(t.net)}</td></tr></table></div><div class="slip-sec"><b>Earning Details</b><table class="slip-table"><tr><th>Wage Description</th><th>Std. Salary</th><th>YTD Amount</th><th>Arrear Amount</th><th>Current Amount</th><th>Total Amount</th></tr><tr><td>Basic Pay</td><td>${fmt(t.b)}</td><td>0.00</td><td>${fmt(t.b)}</td></tr><tr><td>Other Allowance</td><td>${fmt(t.o)}</td><td>0.00</td><td>${fmt(t.o)}</td><td>${fmt(t.o)}</td></tr><tr><td>C.O.L.A</td><td>${fmt(t.cola)}</td><td>${fmt(t.cola)}</td><td>0.00</td><td>${fmt(t.cola)}</td><td>${fmt(t.cola)}</td></tr><tr><td>Conveyance</td><td>${fmt(t.conv)}</td><td>0.00</td><td>${fmt(t.conv)}</td><td>${fmt(t.conv)}</td></tr><tr><td>Special Allowance</td><td>${fmt(t.spec)}</td><td>0.00</td><td>${fmt(t.spec)}</td><td>${fmt(t.spec)}</td></tr><tr><td>Medical 2</td><td>${fmt(t.med)}</td><td>${fmt(t.med)}</td><td>0.00</td><td>${fmt(t.med)}</td><td>${fmt(t.med)}</td></tr><tr class="tot"><td>Totals</td><td>${fmt(t.earn)}</td><td>${fmt(t.earn)}</td><td>0.00</td><td>${fmt(t.earn)}</td><td>${fmt(t.earn)}</td></tr></table></div><div class="slip-sec"><b>Reimbursement Details</b><table class="slip-table"><tr><th>Wage Description</th><th>YTD Amount</th><th>Arrear Amount</th><th>Current Amount</th><th>Total Amount</th></tr><tr><td>Mobile Phone Exp.</td><td>${fmt(t.mob)}</td><td>0.00</td><td>${fmt(t.mob)}</td><td>${fmt(t.mob)}</td></tr><tr><td>Vehicle Maintenance Exp</td><td>${fmt(t.veh)}</td><td>0.00</td><td>${fmt(t.veh)}</td><td>${fmt(t.veh)}</td></tr><tr><td>Daily Allowance</td><td>${fmt(t.daily)}</td><td>0.00</td><td>${fmt(t.daily)}</td><td>${fmt(t.daily)}</td></tr><tr><td>Big city Allowance</td><td>${fmt(t.big)}</td><td>0.00</td><td>${fmt(t.big)}</td><td>${fmt(t.big)}</td></tr><tr><td>Parking/Tool Tax Expense</td><td>${fmt(t.park)}</td><td>0.00</td><td>${fmt(t.park)}</td><td>${fmt(t.park)}</td></tr><tr class="tot"><td>Totals</td><td>${fmt(t.reimb)}</td><td>0.00</td><td>${fmt(t.reimb)}</td><td>${fmt(t.reimb)}</td></tr></table></div><div class="slip-sec"><b>Deduction Details</b><table class="slip-table"><tr><th>Wage Description</th><th>YTD Amount</th><th>Arrear Amount</th><th>Current Amount</th><th>Total Amount</th></tr><tr><td>PF Employee Cont.</td><td>${fmt(t.pf)}-</td><td>0.00</td><td>${fmt(t.pf)}-</td><td>${fmt(t.pf)}-</td></tr><tr><td>EOBI Employee Cont.</td><td>${fmt(t.eobi)}-</td><td>0.00</td><td>${fmt(t.eobi)}-</td><td>${fmt(t.eobi)}-</td></tr><tr class="tot"><td>Totals</td><td>${fmt(t.ded)}-</td><td>0.00</td><td>${fmt(t.ded)}-</td><td>${fmt(t.ded)}-</td></tr></table></div><div class="slip-sec"><b>Income Tax Details</b><table class="slip-table"><tr><th>Taxable Income</th><th>Annual Tax</th><th>Salary YTD</th><th>Bonus YTD</th><th>Tax Liability</th></tr><tr><td>${fmt(d.sTaxInc)}</td><td>0.00</td><td>${fmt(t.earn)}</td><td>0.00</td><td>0.00</td></tr></table></div><div class="slip-sec"><b>Provident Fund Details</b><table class="slip-table"><tr><th>Employee Contr.</th><th>Employer Contr.</th><th>Income</th><th>Loan Balance</th><th>Net Balance</th></tr><tr><td>${fmt(d.sPF2)}</td><td>${fmt(d.sEmpC)}</td><td>${fmt(d.sPFInc)}</td><td>${fmt(d.sLoan)}</td><td>${fmt(d.sNetBal)}</td></tr></table></div><div class="slip-sign"><div class="line">Signature</div></div></div>`;}
 function makeSlip(){calcSlipLive(); let d=getSlipData(); document.getElementById('slipPrintArea').innerHTML=buildSlipHTML(d);}
 function saveSlip(){calcSlipLive(); let d=getSlipData(); if(!d.sName){alert('Employee Name likhein');return;} let t=calcTotals(); d.calcNet=t.net; d.calcPay=t.pay; slips.push(d); localStorage.setItem('gmbSlips',JSON.stringify(slips)); renderSlipList(); autoSync(); alert('Slip Saved: '+d.sName+' - Total Salary Rs.'+fmt(t.net)); makeSlip();}
 function renderSlipList(){document.getElementById('slipList').innerHTML=slips.map((s,i)=>{let t=calcTotalsFromData(s); return `<div class="stock-item"><span>${i+1}. ${s.sName} | ${s.sMonth} ${s.sYear} | Basic: ${s.sBasic} | <b>Net: Rs.${fmt(t.net)}</b></span><span><button class="btn o" onclick="viewSlip(${i})">View</button><button class="btn g" onclick="printOneSlip(${i})">Print</button><button class="btn eb" onclick="secure('editSlip',${i})">Edit</button><button class="btn r" onclick="secure('deleteSlip',${i})">Delete</button></span></div>`}).join('')||'<div>No Slip Saved</div>';}
@@ -187,12 +188,7 @@ function editSlip(i){setSlipData(slips[i]); slips.splice(i,1); localStorage.setI
 function deleteSlip(i){if(confirm('Delete Slip '+slips[i].sName+' ?')){slips.splice(i,1); localStorage.setItem('gmbSlips',JSON.stringify(slips)); renderSlipList(); autoSync();}}
 function editLastSlip(){if(!slips.length){alert('No Slip Saved');return;} editSlip(slips.length-1);}
 function deleteLastSlip(){if(!slips.length){alert('No Slip Saved');return;} deleteSlip(slips.length-1);}
-function printSlipOnly(){
-let d=getSlipData(); if(!d.sName){ if(slips.length){ d=slips[slips.length-1]; setSlipData(d); } else { alert('Pehle Generate ya Save karo'); return; } }
-let html=buildSlipHTML(d);
-let css='.slip{border:1px solid #000;padding:4px;font-size:11px;font-family:Arial} .slip-head{display:flex;border:1px solid #000} .slip-logo{width:125px;border-right:1px solid #000;display:flex;align-items:center;justify-content:center} .slip-logo img{width:100px;height:65px;object-fit:contain} .slip-title{flex:1;text-align:center;border:1px solid #000;margin:2px;padding:2px} .slip-title h2{margin:2px;font-size:18px;border:1px solid #000;padding:3px} .slip-addr{font-size:10px;margin:3px} .slip-title h3{margin:2px;font-size:14px;border:1px solid #000;padding:3px} .slip-info{display:flex;border:1px solid #000;margin-top:2px} .slip-info>div{flex:1;padding:4px;line-height:1.6} .slip-info>div+div{border-left:1px solid #000} .slip-sec{margin-top:4px} .slip-table{width:100%;border-collapse:collapse;table-layout:fixed} .slip-table th{background:#ADD8E6!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;border:1px solid #000;padding:3px;font-size:10px} .slip-table td{border:1px solid #000;padding:3px;text-align:right;font-size:10px} .slip-table td:first-child{text-align:left} .slip-table tr.tot td{background:#eee!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important} .slip-sign{margin-top:18px;text-align:right} .slip-sign .line{border-top:1px solid #000;display:inline-block;min-width:160px;padding-top:3px;text-align:center} @page{size:A4;margin:0.3in} *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}';
-let w=window.open('','_blank'); w.document.write('<html><head><title>Salary Slip - '+d.sName+'</title><style>'+css+'</style></head><body>'+html+'</body></html>'); w.document.close(); setTimeout(()=>{w.print();},500);
-}
+function printSlipOnly(){let d=getSlipData(); if(!d.sName){ if(slips.length){ d=slips[slips.length-1]; setSlipData(d); } else { alert('Pehle Generate ya Save karo'); return; } } let html=buildSlipHTML(d); let css='.slip{border:1px solid #000;padding:4px;font-size:11px;font-family:Arial} .slip-head{display:flex;border:1px solid #000} .slip-logo{width:125px;border-right:1px solid #000;display:flex;align-items:center;justify-content:center} .slip-logo img{width:100px;height:65px;object-fit:contain} .slip-title{flex:1;text-align:center;border:1px solid #000;margin:2px;padding:2px} .slip-title h2{margin:2px;font-size:18px;border:1px solid #000;padding:3px} .slip-addr{font-size:10px;margin:3px} .slip-title h3{margin:2px;font-size:14px;border:1px solid #000;padding:3px} .slip-info{display:flex;border:1px solid #000;margin-top:2px} .slip-info>div{flex:1;padding:4px;line-height:1.6} .slip-info>div+div{border-left:1px solid #000} .slip-sec{margin-top:4px} .slip-table{width:100%;border-collapse:collapse;table-layout:fixed} .slip-table th{background:#ADD8E6!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;border:1px solid #000;padding:3px;font-size:10px} .slip-table td{border:1px solid #000;padding:3px;text-align:right;font-size:10px} .slip-table td:first-child{text-align:left} .slip-table tr.tot td{background:#eee!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important} .slip-sign{margin-top:18px;text-align:right} .slip-sign .line{border-top:1px solid #000;display:inline-block;min-width:160px;padding-top:3px;text-align:center} @page{size:A4;margin:0.3in} *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}'; let w=window.open('','_blank'); w.document.write('<html><head><title>Salary Slip - '+d.sName+'</title><style>'+css+'</style></head><body>'+html+'</body></html>'); w.document.close(); setTimeout(()=>{w.print();},500);}
 function getIncome(){return invoices.reduce((a,b)=>a+(b.total||0),0);}
 function getExpense(){return expenses.reduce((a,b)=>a+(parseFloat(b.amt)||0),0);}
 function renderExpenses(){let inc=getIncome(), exp=getExpense(); document.getElementById('totalInc').innerText=inc; document.getElementById('totalExp').innerText=exp; document.getElementById('totalProfit').innerText=inc-exp; document.getElementById('expList').innerHTML=expenses.map((e,i)=>`<div class="stock-item"><span>${i+1}. ${e.date} | ${e.type} | ${e.desc} | Rs.${e.amt}</span><span><button class="btn eb" onclick="secure('editExp',${i})">Edit</button><button class="btn r" onclick="secure('delExp',${i})">Delete</button></span></div>`).join('')||'<div>No Expense Yet</div>';}
@@ -218,14 +214,16 @@ function printInvoice(){viewInvoice(); setTimeout(()=>window.print(),300);}
 function showInvoices(){document.getElementById('invoiceList').innerHTML='<h3>Backup / Invoice List</h3>'+ (invoices.length?invoices.map((i,idx)=>`<div class="stock-item"><span>${i.no} | ${i.date} | ${i.cust} | Rs.${i.total} | Items:${i.items.length}</span><span><button class="btn o" onclick="loadInv(${idx})">View</button><button class="btn eb" onclick="secure('loadInv',${idx})">Edit</button><button class="btn r" onclick="secure('delInv',${idx})">Delete</button></span></div>`).join(''):'<div>No Invoice Saved Yet</div>');}
 function delInv(idx){if(confirm('Delete Invoice?')){invoices.splice(idx,1); localStorage.setItem('gmbInv',JSON.stringify(invoices)); showInvoices(); renderExpenses(); autoSync();}}
 function loadInv(idx){let inv=invoices[idx]; items=inv.items; document.getElementById('invNo').value=inv.no; document.getElementById('invDate').value=inv.date; document.getElementById('custName').value=inv.cust; renderItems(); viewInvoice();}
-function autoSync(){let data=JSON.stringify({invoices,products,stock,expenses,slips,time:new Date().toISOString()}); localStorage.setItem('gmbDriveBackup',data); localStorage.setItem('gmbPendingSync','1'); if(navigator.onLine){syncToDrive();}}
-function backupToDrive(){autoSync(); if(!navigator.onLine){alert('Offline hai - Data phone me save ho gaya. Internet aate hi Drive me auto save ho jayega.'); return;} alert('Auto Sync Started...'); syncToDrive(true);}
+function autoSync(){let data=JSON.stringify({invoices,salaries,slips,products,stock,expenses,time:new Date().toISOString()}); localStorage.setItem('gmbDriveBackup',data); localStorage.setItem('gmbPendingSync','1'); if(navigator.onLine){syncToDrive();}}
+function backupToDrive(){autoSync(); if(!navigator.onLine){alert('Offline hai - Data phone me save ho gaya. Internet aate hi Drive me auto save ho jayega.'); return;} alert('Auto Sync Started... Google Drive se connect ho raha hai'); syncToDrive(true);}
 function syncToDrive(force){if(!navigator.onLine) return; if(typeof gapi==='undefined') return; try{gapi.load('client:auth2',()=>{gapi.auth2.init({client_id:CLIENT_ID}).then(()=>{let auth=gapi.auth2.getAuthInstance(); if(!auth.isSignedIn.get()){ if(force) auth.signIn().then(()=>uploadToDrive()); } else uploadToDrive();});});}catch(e){}}
 function uploadToDrive(){let data=localStorage.getItem('gmbDriveBackup'); if(!data) return; let token=gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token; fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',{method:'POST',headers:{Authorization:'Bearer '+token},body:createDriveBody(data)}).then(r=>r.json()).then(j=>{localStorage.setItem('gmbPendingSync','0');}).catch(e=>{});}
 function createDriveBody(data){let boundary='gmb'; let meta=JSON.stringify({name:'gmb-pharma-backup.json',mimeType:'application/json'}); let body='--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+meta+'\r\n--'+boundary+'\r\nContent-Type: application/json\r\n\r\n'+data+'\r\n--'+boundary+'--'; return new Blob([body],{type:'multipart/related; boundary='+boundary});}
-function updateNet(){let s=navigator.onLine?'Online':'Offline - Data phone me save ho raha hai'; let el=document.getElementById('netStatus2'); if(el) el.innerText=s;}
-window.addEventListener('online',()=>{updateNet(); autoSync(); alert('Internet Connected - Auto Sync ho raha hai');});
+function updateNet(){let s=navigator.onLine?'Online':'Offline - Data phone me save ho raha hai'; document.getElementById('netStatus').innerText='Status: '+s; let el=document.getElementById('netStatus2'); if(el) el.innerText=s;}
+window.addEventListener('online',()=>{updateNet(); autoSync(); alert('Internet Connected - Auto Sync ho raha hai, data Google Drive par save ho raha hai');});
 window.addEventListener('offline',()=>{updateNet();});
 function summary(){alert('Summary\nTotal Income: Rs.'+getIncome()+'\nTotal Expense: Rs.'+getExpense()+'\nProfit: Rs.'+(getIncome()-getExpense())+'\nTotal Invoices: '+invoices.length);}
-try{fillSelects(); showInvoices(); renderExpenses(); updateNet(); calcSlipLive();}catch(e){}
-</script></body></html>
+fillSelects(); showInvoices(); renderExpenses(); updateNet(); calcSlipLive();
+</script>
+</body>
+</html>
