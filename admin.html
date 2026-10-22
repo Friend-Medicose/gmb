@@ -5,11 +5,11 @@
 <style>
 *{box-sizing:border-box} body{font-family:Arial;margin:0;background:#f4f6f8;color:#222;font-size:13px}
 .wrap{max-width:1100px;margin:auto;padding:15px}
-.header{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;padding:12px 15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 8px #ddd;text-align:center;position:relative}
-.header img{height:70px;width:70px;object-fit:contain} .header h1{margin:0;color:#0b3d91;font-size:22px;text-align:center} .sub{color:#666;font-size:13px;text-align:center}
-.menuBtn{position:absolute;right:12px;top:12px;background:#0b3d91;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:20px;cursor:pointer}
-.menuPanel{display:none;position:absolute;right:12px;top:55px;background:#fff;border-radius:10px;box-shadow:0 4px 15px #999;z-index:100;width:250px;padding:8px;text-align:left;border:1px solid #ddd}
-.menuPanel button{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #eee;padding:11px 10px;cursor:pointer;font-weight:600;color:#0b3d91;font-size:13px}
+.header{display:flex;align-items:center;gap:10px;background:#fff;padding:12px 12px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 8px #ddd;position:relative}
+.header img{height:60px;width:60px;object-fit:contain;flex-shrink:0} .header h1{margin:0;color:#0b3d91;font-size:18px;line-height:1.2} .sub{color:#666;font-size:12px}
+.menuBtn{margin-left:auto;background:#0b3d91;color:#fff;border:0;border-radius:8px;padding:8px 12px;font-size:20px;cursor:pointer;flex-shrink:0;z-index:5}
+.menuPanel{display:none;position:absolute;right:10px;top:65px;background:#fff;border-radius:10px;box-shadow:0 4px 15px #999;z-index:999;width:260px;padding:8px;border:1px solid #ddd}
+.menuPanel button{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #eee;padding:12px 10px;cursor:pointer;font-weight:600;color:#0b3d91;font-size:13px}
 .menuPanel button:hover{background:#0b3d91;color:#fff}
 .box{background:#fff;border-radius:10px;padding:15px;margin-bottom:15px;box-shadow:0 1px 5px #ddd}
 .box h2{margin:0 0 12px;color:#0b3d91;font-size:18px;padding-bottom:6px}
@@ -54,16 +54,16 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 </style></head><body>
 <div id="lock" style="position:fixed;inset:0;background:#0b3d91;display:flex;justify-content:center;align-items:center;z-index:9999"><div style="background:#fff;padding:25px;border-radius:12px;width:320px;text-align:center"><img src="images/logo.jpg" style="height:70px"><h2>GMB PHARMA</h2><p>Enter Password</p><input id="pwd" type="password" placeholder="Password" autocomplete="off"><br><br><button class="btn g" style="width:100%" onclick="if(document.getElementById('pwd').value.replace(/ /g,'')==='gmb777'){document.getElementById('lock').style.display='none';document.getElementById('mainApp').style.display='block'}else{document.getElementById('pwdErr').style.display='block'}">Login</button><p id="pwdErr" style="color:red;display:none">Wrong Password</p><p style="font-size:11px;color:#666">Status: Online</p></div></div>
 <div class="wrap no-print" id="mainApp" style="display:none">
-<div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464 | <span id="netStatus2">Online</span></div></div>
-<button class="menuBtn" onclick="toggleMenu()">⋮</button>
+<div class="header"><img src="images/logo.jpg" onerror="this.src='logo.jpg'"><div style="flex:1"><h1>GMB PHARMA KARACHI PAKISTAN</h1><div class="sub">Admin Panel - Where good health begins | 0345-0707464 | <span id="netStatus2">Online</span></div></div>
+<button class="menuBtn" onclick="var m=document.getElementById('menuPanel');m.style.display=m.style.display==='block'?'none':'block'">⋮</button>
 <div id="menuPanel" class="menuPanel">
-<button onclick="openSec('invItemsSec')">Invoice Items</button>
-<button onclick="openSec('stockEntrySec')">Total Stock Entry</button>
-<button onclick="openSec('manageSec')">Manage Products</button>
-<button onclick="openSec('salarySec')">Salary System</button>
-<button onclick="openSec('incomeSec')">Income / Expense & Summary</button>
-<button onclick="openSec('stockDetailSec')">Stock Detail</button>
-<button onclick="toggleMenu()" style="background:#f2f2f2;color:#333">Close Menu</button>
+<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('invItemsSec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('invItemsSec').scrollIntoView()">Invoice Items</button>
+<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('stockEntrySec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('stockEntrySec').scrollIntoView()">Total Stock Entry</button>
+<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('manageSec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('manageSec').scrollIntoView()">Manage Products</button>
+<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('salarySec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('salarySec').scrollIntoView()">Salary System</button>
+<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('incomeSec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('incomeSec').scrollIntoView()">Income / Expense & Summary</button>
+<button onclick="document.querySelectorAll('#invItemsSec,#stockEntrySec,#manageSec,#salarySec,#incomeSec,#stockDetailSec').forEach(s=>s.classList.add('hide'));document.getElementById('stockDetailSec').classList.remove('hide');document.getElementById('menuPanel').style.display='none';document.getElementById('stockDetailSec').scrollIntoView()">Stock Detail</button>
+<button onclick="document.getElementById('menuPanel').style.display='none'" style="background:#f2f2f2;color:#333">Close Menu</button>
 </div></div>
 <div class="box"><h2>1. Customer Details</h2>
 <div class="row"><div><label>Invoice No:</label><input id="invNo" value="001"></div><div><label>Invoice Date:</label><input id="invDate" type="date" value="2026-10-20"></div><div><label>Customer ID:</label><input id="custCode" placeholder="Customer ID"></div><div><label>Customer Name:</label><input id="custName" placeholder="Customer Name"></div></div>
@@ -127,8 +127,6 @@ table{width:100%;border-collapse:collapse;font-size:13px} th{background:#0b3d91;
 <script>
 const CLIENT_ID='YOUR_CLIENT_ID.apps.googleusercontent.com';
 function secure(fnName,arg){let p=prompt('Edit/Delete ke liye Security Password lagayen:'); if(p!=='gmb888'){alert('Wrong Password! Edit/Delete nahi hoga.'); return;} if(arg!==undefined){window[fnName](arg);} else {window[fnName]();}}
-function toggleMenu(){let m=document.getElementById('menuPanel'); m.style.display=m.style.display==='block'?'none':'block';}
-function openSec(id){['invItemsSec','stockEntrySec','manageSec','salarySec','incomeSec','stockDetailSec'].forEach(s=>document.getElementById(s).classList.add('hide')); document.getElementById(id).classList.remove('hide'); document.getElementById('menuPanel').style.display='none'; window.scrollTo({top:document.getElementById(id).offsetTop-10,behavior:'smooth'});}
 let products=["1. Syrup-GM-APTI","2. Sachets-GM-BERRY","3. Syrup-GM-CAL","4. Tablet-GM-CAL","5. Syrup-GM-CID","6. Drops-GM-D","7. Syrup-GM-LEAF","8. Syrup-GM-VIT","9. Tablet-GM-VIT","10. Softgel-Thy-D Plus","11. Tablet-GM-D 5000 IU"];
 let saved=JSON.parse(localStorage.getItem('gmbProds')||'null'); if(saved) products=saved;
 let stock=JSON.parse(localStorage.getItem('gmbStock')||'null');
